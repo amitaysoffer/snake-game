@@ -39,7 +39,7 @@ function moveSnake() {
   if (snakeLocationX + snakeSizeX >= appleLocationX && snakeLocationX <= appleLocationX + appleSizeX &&
     snakeLocationY + snakeSizeY >= appleLocationY && snakeLocationY <= appleLocationY + appleSizeY) {
     appleReset();
-    addBodyToSnake();
+    // addBodyToSnake();
     console.log('I hit the apple!')
     // debugger
   }
@@ -49,7 +49,9 @@ function moveSnake() {
 function addBodyToSnake() {
   // Tale of snake
 
-  renderRect(snakeLocationX - snakeSizeX * 2, snakeLocationY, snakeSizeX, snakeSizeY, 'green')
+  renderRect(snakeLocationX - snakeSizeX - snakeSizeX - taleSizeX, snakeLocationY, snakeSizeX, snakeSizeY, 'green')
+  // renderRect(snakeLocationX - snakeSizeX - snakeSizeX, snakeLocationY, snakeSizeX, snakeSizeY, 'green')
+  // renderRect(snakeLocationX - snakeSizeX - snakeSizeX  , snakeLocationY, snakeSizeX, snakeSizeY, 'green')
   // renderRect(snakeLocationX - snakeSizeX - 50, snakeLocationY, snakeSizeX, snakeSizeY, 'green')
   // renderRect(0, 50, 50, 50, 'green')
 
@@ -104,6 +106,7 @@ document.addEventListener("keydown", function (e) {
     if (isMoveRightLeft) {
       snakeSpeedX = 2;
       snakeSpeedY = 0;
+      taleSizeX = taleSizeX + 20
     }
     isMoveRightLeft = false;
     isMoveDownUp = true
@@ -113,6 +116,7 @@ document.addEventListener("keydown", function (e) {
     if (isMoveRightLeft) {
       snakeSpeedX = -2;
       snakeSpeedY = 0;
+      taleSizeX = taleSizeX + 20
     }
     isMoveRightLeft = false;
     isMoveDownUp = true
@@ -123,6 +127,7 @@ document.addEventListener("keydown", function (e) {
     if (isMoveDownUp) {
       snakeSpeedY = -2;
       snakeSpeedX = 0;
+      taleSizeX = taleSizeX - 20
     }
     isMoveDownUp = false
     isMoveRightLeft = true;
@@ -133,6 +138,7 @@ document.addEventListener("keydown", function (e) {
     if (isMoveDownUp) {
       snakeSpeedY = 2;
       snakeSpeedX = 0;
+      taleSizeX = taleSizeX - 20
     }
     isMoveDownUp = false
     isMoveRightLeft = true;
