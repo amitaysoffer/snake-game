@@ -1,71 +1,63 @@
-let canvas;
-let canvasContext;
-let snakeSpeedX = 2;
-let snakeSpeedY = 0;
-
 window.onload = function () {
+  // debugger
   canvas = document.getElementById('gameCanvas');
   canvasContext = canvas.getContext('2d');
-  appleReset();
+  // appleReset();
   drawEverything();
   setInterval(function () {
     moveSnake();
     // moveApple();
     drawEverything();
-    addBodyToSnake();
+    // addBodyToSnake();
   }, 10)
 };
 
-function moveSnake() {
-  // debugger
-  snakeLocationX = snakeLocationX + snakeSpeedX;
-  snakeLocationY = snakeLocationY + snakeSpeedY;
-
-  // keeps snake inside the game borders
-  if (snakeLocationX < 0) {
-    snakeSpeedX = -snakeSpeedX
-  }
-  if (snakeLocationX > canvas.width - snakeSizeX) {
-    snakeSpeedX = -snakeSpeedX
-  }
-  if (snakeLocationY < 0) {
-    snakeSpeedY = -snakeSpeedY
-  }
-  if (snakeLocationY > canvas.height - snakeSizeY) {
-    snakeSpeedY = -snakeSpeedY
-  }
-
-  // snake hits the apple
-  if (snakeLocationX + snakeSizeX >= appleLocationX && snakeLocationX <= appleLocationX + appleSizeX &&
-    snakeLocationY + snakeSizeY >= appleLocationY && snakeLocationY <= appleLocationY + appleSizeY) {
-    appleReset();
-    // addBodyToSnake();
-    console.log('I hit the apple!')
-    // debugger
-  }
-}
+let canvas;
+let canvasContext;
+let snakeSpeedX = 1;
+let snakeSpeedY = 0;
 
 
-function addBodyToSnake() {
-  // Tale of snake
-
-  renderRect(snakeLocationX - snakeSizeX - snakeSizeX - taleSizeX, snakeLocationY, snakeSizeX, snakeSizeY, 'green')
-  // renderRect(snakeLocationX - snakeSizeX - snakeSizeX, snakeLocationY, snakeSizeX, snakeSizeY, 'green')
-  // renderRect(snakeLocationX - snakeSizeX - snakeSizeX  , snakeLocationY, snakeSizeX, snakeSizeY, 'green')
-  // renderRect(snakeLocationX - snakeSizeX - 50, snakeLocationY, snakeSizeX, snakeSizeY, 'green')
-  // renderRect(0, 50, 50, 50, 'green')
-
-  // debugger;
-  // snakeSizeX += 30
-  // snakeSizeY += 20
-}
-
-
-
-let snakeLocationX = 200;
-let snakeLocationY = 300;
+// let snakeLocationX = 200;
+// let snakeLocationY = 300;
 let snakeSizeX = 30
 let snakeSizeY = 30
+
+const snake = {
+  body: [
+    { x: 200, y: 300 },
+    { x: 100, y: 100 },
+    { x: 20, y: 0 }
+  ]
+}
+
+
+function moveSnake() {
+  // move the snake head in the current direction
+  snake.body[0].x += snakeSpeedX
+  snake.body[0].y += snakeSpeedY
+
+  snake.body[1].x = snake.body[0].x + 50
+  snake.body[1].y = snake.body[0].y + 50
+  // snakeLocationY = snakeLocationY + snakeSpeedY
+
+  // snake.body[1].x = snake.body[0].x
+  // snake.body[1].y = snake.body[0].y
+
+  
+
+  // loop through each body part
+  // console.log(snake.body[0].x)
+  // for (let i = 0; snake.body.length; i++) {
+  // console.log(snake.body[i])
+  //  console.log(snake.body[0].x);   
+  //  console.log(snake.body[0].y);   
+  // }
+  // console.log(snakeLocationX)
+
+  // move the current body part to where it's parent was
+}
+
 
 let taleSizeX = 10;
 let taleSizeY = 10;
@@ -82,12 +74,18 @@ function drawEverything() {
   renderRect(0, 0, canvas.width, canvas.height, 'black')
   // Snake
   // renderApple(appleLocationX, appleLocationY, 20, 'white');
-  renderRect(snakeLocationX, snakeLocationY, snakeSizeX, snakeSizeY, 'blue')
+  // debugger;
+  // renderRect(snakeLocationX, snakeLocationY, snakeSizeX, snakeSizeY, 'blue')
+  renderRect(snake.body[0].x, snake.body[0].y, snakeSizeX, snakeSizeY, 'blue')
+
+  renderRect(snake.body[1].x, snake.body[1].y, snakeSizeX, snakeSizeY, 'blue')
+
+  // renderRect(snake.body[2].x, snake.body[2].y, snakeSizeX, snakeSizeY, 'blue')
   // Apple
-  renderRect(appleLocationX, appleLocationY, appleSizeX, appleSizeY, 'red')
+  // renderRect(appleLocationX, appleLocationY, appleSizeX, appleSizeY, 'red')
   // draw tale
-  // renderRect(snakeLocationX - snakeSizeX, snakeLocationY, snakeSizeX, snakeSizeY, 'green')
-  // renderRect(snakeLocationX - snakeSizeX * 2, snakeLocationY, snakeSizeX, snakeSizeY, 'green')
+  // renderRect(snakeLocationX + snake.body[1].x, snakeLocationY + snake.body[1].y, snakeSizeX, snakeSizeY, 'blue')
+  // renderRect(snakeLocationX + snake.body[2].x, snakeLocationY + snake.body[2].y, snakeSizeX, snakeSizeY, 'blue')
 }
 
 function renderRect(leftX, topY, width, height, drawColor) {
@@ -104,9 +102,9 @@ document.addEventListener("keydown", function (e) {
   // console.log('right click')
   if (e.which === 39) {
     if (isMoveRightLeft) {
-      snakeSpeedX = 2;
+      snakeSpeedX = 1;
       snakeSpeedY = 0;
-      taleSizeX = taleSizeX + 20
+      // taleSizeX = taleSizeX + 20
     }
     isMoveRightLeft = false;
     isMoveDownUp = true
@@ -114,9 +112,9 @@ document.addEventListener("keydown", function (e) {
   if (e.which === 37) {
     // console.log('left click')
     if (isMoveRightLeft) {
-      snakeSpeedX = -2;
+      snakeSpeedX = -1;
       snakeSpeedY = 0;
-      taleSizeX = taleSizeX + 20
+      // taleSizeX = taleSizeX + 20
     }
     isMoveRightLeft = false;
     isMoveDownUp = true
@@ -125,9 +123,9 @@ document.addEventListener("keydown", function (e) {
   if (e.which === 38) {
     // console.log('up click')
     if (isMoveDownUp) {
-      snakeSpeedY = -2;
+      snakeSpeedY = -1;
       snakeSpeedX = 0;
-      taleSizeX = taleSizeX - 20
+      // taleSizeX = taleSizeX - 20
     }
     isMoveDownUp = false
     isMoveRightLeft = true;
@@ -136,9 +134,9 @@ document.addEventListener("keydown", function (e) {
   if (e.which === 40) {
     // console.log('down click')
     if (isMoveDownUp) {
-      snakeSpeedY = 2;
+      snakeSpeedY = 1;
       snakeSpeedX = 0;
-      taleSizeX = taleSizeX - 20
+      // taleSizeX = taleSizeX - 20
     }
     isMoveDownUp = false
     isMoveRightLeft = true;
@@ -147,25 +145,3 @@ document.addEventListener("keydown", function (e) {
 })
 
 
-function appleReset() {
-  // if (snakeLocationX === appleLocationX && snakeLocationY === appleLocationY) {
-  // debugger
-  appleLocationX = Math.floor((Math.random() * canvas.width) + 1);
-  appleLocationY = Math.floor((Math.random() * canvas.height) + 1);
-  // Make sure new apple doens't go out of bounds
-  if (appleLocationX > canvas.width - appleSizeX) {
-    appleLocationX = appleLocationX - appleSizeX
-  }
-  if (appleLocationY > canvas.height - appleSizeY) {
-    appleLocationY = appleLocationY - appleSizeY
-  }
-  // console.log(appleLocationX)
-  // console.log(appleLocationY)
-}
-
-function renderApple(leftX, topY, radius, drawColor) {
-  canvasContext.fillStyle = drawColor;
-  canvasContext.beginPath();
-  canvasContext.arc(leftX, topY, radius, 0, Math.PI * 2, true);
-  canvasContext.fill();
-}
