@@ -4,110 +4,138 @@ window.onload = function () {
   appleReset();
   drawEverything();
   setInterval(function () {
-    moveSnake();
+    if (isMoveSnakeStart){
+      moveSnake();
+    }
     drawEverything();
-  }, 30);
+  }, 50);
 };
+
+let isMoveSnakeStart = false
 
 let canvas;
 let canvasContext;
 
-let snakeSizeX = 5;
-let snakeSizeY = 5;
+let snakeSizeX = 20;
+let snakeSizeY = 20;
 
 
-let body = [
+const body = [
+  { x: 60, y: 100 },
+  { x: 40, y: 100 },
   { x: 20, y: 100 },
-  { x: 10, y: 100 },
   { x: 0, y: 100 }
 ]
 
-let bodyCopy = [
+const bodyCopy = [
+  { x: 60, y: 100 },
+  { x: 40, y: 100 },
   { x: 20, y: 100 },
-  { x: 10, y: 100 },
   { x: 0, y: 100 }
 ]
 
-let directionX = 10;
+let directionX = 20;
 let directionY = 0;
-
-function loop() {
-  for (let i = 1; body.length > i; i++) {
-    // Attach snake to head
-    body[i].x = bodyCopy[i - 1].x
-    body[i].y = bodyCopy[i - 1].y
-
-    // Copy the original settings to the bodyCopy
-    bodyCopy[i - 1].x = body[i - 1].x
-    bodyCopy[i - 1].y = body[i - 1].y
-
-  }
-}
 
 function moveSnake() {
   // debugger
   body[0].x += directionX;
   body[0].y += directionY;
 
-  loop();
+  keepBodyCloseToHead();
 
   // keeps snake inside the game borders
-  if (body[0].x < 0) {
-    directionX = -directionX
-  }
-  if (body[0].x > canvas.width - snakeSizeX) {
-    directionX = -directionX
-  }
-  if (body[0].y < 0) {
-    directionY = -directionY
-  }
-  if (body[0].y > canvas.height - snakeSizeY) {
-    directionY = -directionY
-  }
+  snakeRemainInBorders();
+
+  // Snake head hits the body
+  snakeHitOwnBody();
 
   // Hit the apple
   if (body[0].x + snakeSizeX >= appleLocationX && body[0].x <= appleLocationX + appleSizeX &&
     body[0].y + snakeSizeY >= appleLocationY && body[0].y <= appleLocationY + appleSizeY) {
+
     appleReset();
-
-    // debugger;
-
-    // Add a body part to the snake
-    if (body[0].x != body[1].x) {
-      body.push({ x: body[body.length - 1].x - (body[0].x - body[1].x), y: body[0].y });
-
-      bodyCopy.push({ x: bodyCopy[bodyCopy.length - 1].x - (bodyCopy[0].x - bodyCopy[1].x), y: bodyCopy[0].y });
-      console.log(body.length)
-      console.log(bodyCopy.length)
-      // debugger
-    } else {
-      body.push({
-        x: body[0].x, y: body[body.length - 1].y + (body[1].y - body[0].y)
-      });
-
-      bodyCopy.push({
-        x: bodyCopy[0].x, y: bodyCopy[bodyCopy.length - 1].y + (bodyCopy[1].y - bodyCopy[0].y)
-      });
-      console.log(body.length)
-      console.log(bodyCopy.length)
-      // debugger
-    }
-
+    addBodyPartToSnake();
     console.log('I hit the apple!')
     // debugger
   }
 }
 
+function keepBodyCloseToHead() {
+  for (let i = 1; body.length > i; i++) {
+    // Attach snake to head
+    body[i].x = bodyCopy[i - 1].x
+    body[i].y = bodyCopy[i - 1].y
+  }
+  // Copy the original body settings to the bodyCopy
+  // debugger
+  for (let j = 0; bodyCopy.length > j; j++) {
+    bodyCopy[j].x = body[j].x
+    bodyCopy[j].y = body[j].y
+  }
+}
+
+function snakeHitOwnBody() {
+  for (let i = 1; body.length > i; i++) {
+    if (body[0].x === body[i].x && body[0].y === body[i].y) {
+      // debugger;
+      console.log('No touching the snake');
+    }
+  }
+}
+
+// function restartGame() {
+//   console.log('You loose!');
+
+
+//   body = [
+//     { x: 50, y: 100 },
+//     { x: 40, y: 100 },
+//     { x: 30, y: 100 }
+//   ]
+
+//   bodyCopy = [
+//     { x: 50, y: 100 },
+//     { x: 40, y: 100 },
+//     { x: 30, y: 100 }
+//   ]
+//   directionX = 20;
+//   directionY = 0;
+//   // drawEverything();
+
+//   appleReset();
+// }
+
+
+function addBodyPartToSnake() {
+  if (body[0].x != body[1].x) {
+    body.push({ x: body[body.length - 1].x - (body[0].x - body[1].x), y: body[0].y });
+    // debugger;
+    bodyCopy.push({ x: bodyCopy[bodyCopy.length - 1].x - (bodyCopy[0].x - bodyCopy[1].x), y: bodyCopy[0].y });
+    // debugger
+  } else {
+    body.push({
+      x: body[0].x, y: body[body.length - 1].y + (body[1].y - body[0].y)
+    });
+
+    bodyCopy.push({
+      x: bodyCopy[0].x, y: bodyCopy[bodyCopy.length - 1].y + (bodyCopy[1].y - bodyCopy[0].y)
+    });
+    console.log(body.length)
+    console.log(bodyCopy.length)
+    // debugger
+  }
+}
 
 // Apple settings
 let appleLocationX;
 let appleLocationY;
-let appleSizeX = 30;
-let appleSizeY = 30;
+let appleSizeX = 20;
+let appleSizeY = 20;
 
 function renderSnake() {
   for (let k = 0; body.length > k; k++) {
-    renderRect(body[k].x, body[k].y, snakeSizeX, snakeSizeY, "blue");
+    renderRect(body[k].x, body[k].y, snakeSizeX, snakeSizeY, "green");
   }
   // debugger
 }
@@ -115,22 +143,20 @@ function renderSnake() {
 function drawEverything() {
   // Canvas
   renderRect(0, 0, canvas.width, canvas.height, "black");
-
   // Snake
   renderSnake();
-  // renderRect(body[0].x, body[0].y, snakeSizeX, snakeSizeY, "blue");
-  // renderRect(body[1].x, body[1].y, snakeSizeX, snakeSizeY, "blue");
-  // renderRect(body[2].x, body[2].y, snakeSizeX, snakeSizeY, "blue");
-
   // Apple
   renderRect(appleLocationX, appleLocationY, appleSizeX, appleSizeY, 'red')
+  // renderApple(appleLocationX, appleLocationY, 10, 'red')
 }
+
 function renderRect(leftX, topY, width, height, drawColor) {
   canvasContext.fillStyle = drawColor;
   canvasContext.fillRect(leftX, topY, width, height);
 }
 
 function appleReset() {
+  debugger
   appleLocationX = Math.floor((Math.random() * canvas.width) + 1);
   appleLocationY = Math.floor((Math.random() * canvas.height) + 1);
   // Make sure new apple doens't go out of bounds
@@ -159,26 +185,29 @@ document.addEventListener("keydown", function (e) {
     // right
     if (isMoveRightLeft) {
       directionY = 0;
-      directionX = 10;
+      directionX = 20;
     }
     isMoveRightLeft = false;
     isMoveDownUp = true
+    isMoveSnakeStart = true
   }
   if (e.which === 37) {
     // left
     if (isMoveRightLeft) {
       directionY = 0;
-      directionX = -10;
+      directionX = -20;
     }
     isMoveRightLeft = false;
     isMoveDownUp = true
+    isMoveSnakeStart = true
   }
   if (e.which === 38) {
     // up
     if (isMoveDownUp) {
-      directionY = -10;
+      directionY = -20;
       directionX = 0;
     }
+    isMoveSnakeStart = true
     isMoveDownUp = false
     isMoveRightLeft = true;
   }
@@ -186,10 +215,51 @@ document.addEventListener("keydown", function (e) {
     // down
     if (isMoveDownUp) {
       // debugger;
-      directionY = 10;
+      directionY = 20;
       directionX = 0;
     }
+    isMoveSnakeStart = true
     isMoveDownUp = false
     isMoveRightLeft = true;
   }
 })
+
+function snakeRemainInBorders() {
+  // console.log(body[0].y)
+  if (body[0].x <= 0 && body[0].y <= canvas.height) {
+    // Left side
+    // debugger;
+    // restartGame()
+    // directionX = -directionX
+    directionX = 0;
+    directionY = -20;
+    // console.log('touched the sides')
+  }
+  else if (body[0].x >= canvas.width - snakeSizeX && body[0].y <= canvas.height) {
+    // Right side
+    // restartGame()
+    // debugger;
+    // directionX = -directionX
+    directionX = 0;
+    directionY = 20;
+    // console.log('touched the sides')
+  }
+  else if (body[0].y <= 0 && body[0].x <= 0) {
+    // Top side
+    // restartGame()
+    // debugger;
+    // directionY = -directionY
+    directionX = 20;
+    directionY = 0;
+    // console.log('touched the sides')
+  }
+  else if (body[0].y >= canvas.height - snakeSizeY && body[0].x <= canvas.width) {
+    // Bottom side
+    // debugger;
+    // restartGame()
+    // directionY = -directionY
+    directionY = 0;
+    directionX = -20;
+    // console.log('touched the sides')
+  }
+}
