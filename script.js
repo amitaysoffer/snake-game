@@ -50,14 +50,12 @@ function moveSnake() {
   // Snake head hits the body
   snakeHitOwnBody();
 
-  // Hit the apple
-  // if (body[0].x + snakeSizeX >= appleLocationX && body[0].x <= appleLocationX + appleSizeX &&
-  //   body[0].y + snakeSizeY >= appleLocationY && body[0].y <= appleLocationY + appleSizeY) {
-
+  // Hit an apple
   if (body[0].x === appleLocationX && body[0].y === appleLocationY) {
 
     appleReset();
     addBodyPartsToSnake();
+    document.getElementById('apple-list').innerText
     console.log('I hit the apple!')
     // debugger
   }
@@ -190,8 +188,8 @@ document.addEventListener("keydown", function (e) {
   if (e.which === 39) {
     // right
     if (isMoveRightLeft) {
-      directionY = 0;
       directionX = 20;
+      directionY = 0;
     }
     isMoveRightLeft = false;
     isMoveDownUp = true
@@ -200,8 +198,8 @@ document.addEventListener("keydown", function (e) {
   if (e.which === 37) {
     // left
     if (isMoveRightLeft) {
-      directionY = 0;
       directionX = -20;
+      directionY = 0;
     }
     isMoveRightLeft = false;
     isMoveDownUp = true
@@ -210,8 +208,8 @@ document.addEventListener("keydown", function (e) {
   if (e.which === 38) {
     // up
     if (isMoveDownUp) {
-      directionY = -20;
       directionX = 0;
+      directionY = -20;
     }
     isMoveSnakeStart = true
     isMoveDownUp = false
@@ -221,8 +219,8 @@ document.addEventListener("keydown", function (e) {
     // down
     if (isMoveDownUp) {
       // debugger;
-      directionY = 20;
       directionX = 0;
+      directionY = 20;
     }
     isMoveSnakeStart = true
     isMoveDownUp = false
@@ -230,48 +228,45 @@ document.addEventListener("keydown", function (e) {
   }
 })
 
+// Prevent snake from going off canvas
 function snakeRemainInBorders() {
-  // debugger;
-  // console.log(body[0].y)
-  // if ( body[0].x <= snakeSizeX && 
-  //   body[0].y <= canvas.height && body[0].y <= snakeSizeY ) {
-    if(body[0].y >= snakeSizeY && body[0].y <= canvas.height &&
-      body[0].x >= 0 && body[0].x < snakeSizeX  ) {
+  if (body[0].y >= snakeSizeY && body[0].y <= canvas.height && body[0].x >= 0 && body[0].x < snakeSizeX) {
     // Left side
-    // debugger;
-    // restartGame()
-    // directionX = -directionX
-    directionX = 0;
-    directionY = -20;
-    // console.log('touched the sides')
+    if (isMoveDownUp) {
+      directionX = 0;
+      directionY = -20;
+    }
+    isMoveDownUp = false
+    isMoveRightLeft = true;
   }
-  else if (body[0].x >= 0 && body[0].x < canvas.width - snakeSizeX 
-    &&
-     body[0].y >= 0 && body[0].y <= snakeSizeY) {
+  else if (body[0].x >= 0 && body[0].x < canvas.width - snakeSizeX
+    && body[0].y <= 0 && body[0].y <= snakeSizeY) {
+    // debugger
     // Top side
-    // restartGame()
-    // debugger;
-    // directionY = -directionY
-    directionX = 20;
-    directionY = 0;
-    // console.log('touched the sides')
+    if (isMoveRightLeft) {
+      directionX = 20;
+      directionY = 0;
+    }
+    isMoveRightLeft = false;
+    isMoveDownUp = true
   } else if (body[0].x >= canvas.width - snakeSizeX && body[0].y >= 0 && body[0].y < canvas.height - snakeSizeY) {
     // Right side
-    // restartGame()
-    // debugger;
-    // directionX = -directionX
-    directionX = 0;
-    directionY = 20;
-    // console.log('touched the sides')
+    if (isMoveDownUp) {
+      directionX = 0;
+      directionY = 20;
+    }
+    isMoveDownUp = false
+    isMoveRightLeft = true;
   }
   else if (body[0].x <= canvas.width - snakeSizeX && body[0].x >= 0
-     && body[0].y >= canvas.height - snakeSizeY && body[0].y <= canvas.height  ) {
+    && body[0].y >= canvas.height - snakeSizeY && body[0].y <= canvas.height) {
     // Bottom side
-    // debugger;
-    // restartGame()
-    // directionY = -directionY
-    directionY = 0;
-    directionX = -20;
-    // console.log('touched the sides')
+    if (isMoveRightLeft) {
+      directionX = -20;
+      directionY = 0;
+    }
+    isMoveRightLeft = false;
+    isMoveDownUp = true
   }
 }
+
