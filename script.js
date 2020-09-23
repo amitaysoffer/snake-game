@@ -156,7 +156,7 @@ function renderRect(leftX, topY, width, height, drawColor) {
 }
 
 function appleReset() {
-  debugger
+  // debugger
   appleLocationX = Math.floor((Math.random() * canvas.width) + 1);
   appleLocationY = Math.floor((Math.random() * canvas.height) + 1);
   // Make sure new apple doens't go out of bounds
