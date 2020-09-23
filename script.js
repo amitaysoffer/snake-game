@@ -4,7 +4,7 @@ window.onload = function () {
   appleReset();
   drawEverything();
   setInterval(function () {
-    if (isMoveSnakeStart){
+    if (isMoveSnakeStart) {
       moveSnake();
     }
     drawEverything();
@@ -51,11 +51,13 @@ function moveSnake() {
   snakeHitOwnBody();
 
   // Hit the apple
-  if (body[0].x + snakeSizeX >= appleLocationX && body[0].x <= appleLocationX + appleSizeX &&
-    body[0].y + snakeSizeY >= appleLocationY && body[0].y <= appleLocationY + appleSizeY) {
+  // if (body[0].x + snakeSizeX >= appleLocationX && body[0].x <= appleLocationX + appleSizeX &&
+  //   body[0].y + snakeSizeY >= appleLocationY && body[0].y <= appleLocationY + appleSizeY) {
+
+  if (body[0].x === appleLocationX && body[0].y === appleLocationY) {
 
     appleReset();
-    addBodyPartToSnake();
+    addBodyPartsToSnake();
     console.log('I hit the apple!')
     // debugger
   }
@@ -107,7 +109,7 @@ function snakeHitOwnBody() {
 // }
 
 
-function addBodyPartToSnake() {
+function addBodyPartsToSnake() {
   if (body[0].x != body[1].x) {
     body.push({ x: body[body.length - 1].x - (body[0].x - body[1].x), y: body[0].y });
     // debugger;
@@ -156,15 +158,19 @@ function renderRect(leftX, topY, width, height, drawColor) {
 }
 
 function appleReset() {
-  // debugger
   appleLocationX = Math.floor((Math.random() * canvas.width) + 1);
   appleLocationY = Math.floor((Math.random() * canvas.height) + 1);
-  // Make sure new apple doens't go out of bounds
-  if (appleLocationX > canvas.width - appleSizeX) {
-    appleLocationX = appleLocationX - appleSizeX
+
+
+  // Make sure apple doesn't render out of canvas
+  appleLocationX = appleLocationX > 780 ? 780 : appleLocationX
+  appleLocationY = appleLocationY > 580 ? 580 : appleLocationY
+
+  while ((appleLocationY / 20 % 1)) {
+    appleLocationY = appleLocationY + 1
   }
-  if (appleLocationY > canvas.height - appleSizeY) {
-    appleLocationY = appleLocationY - appleSizeY
+  while ((appleLocationX / 20 % 1)) {
+    appleLocationX = appleLocationX + 1
   }
 }
 
@@ -225,8 +231,12 @@ document.addEventListener("keydown", function (e) {
 })
 
 function snakeRemainInBorders() {
+  // debugger;
   // console.log(body[0].y)
-  if (body[0].x <= 0 && body[0].y <= canvas.height) {
+  // if ( body[0].x <= snakeSizeX && 
+  //   body[0].y <= canvas.height && body[0].y <= snakeSizeY ) {
+    if(body[0].y >= snakeSizeY && body[0].y <= canvas.height &&
+      body[0].x >= 0 && body[0].x < snakeSizeX  ) {
     // Left side
     // debugger;
     // restartGame()
@@ -235,7 +245,17 @@ function snakeRemainInBorders() {
     directionY = -20;
     // console.log('touched the sides')
   }
-  else if (body[0].x >= canvas.width - snakeSizeX && body[0].y <= canvas.height) {
+  else if (body[0].x >= 0 && body[0].x < canvas.width - snakeSizeX 
+    &&
+     body[0].y >= 0 && body[0].y <= snakeSizeY) {
+    // Top side
+    // restartGame()
+    // debugger;
+    // directionY = -directionY
+    directionX = 20;
+    directionY = 0;
+    // console.log('touched the sides')
+  } else if (body[0].x >= canvas.width - snakeSizeX && body[0].y >= 0 && body[0].y < canvas.height - snakeSizeY) {
     // Right side
     // restartGame()
     // debugger;
@@ -244,16 +264,8 @@ function snakeRemainInBorders() {
     directionY = 20;
     // console.log('touched the sides')
   }
-  else if (body[0].y <= 0 && body[0].x <= 0) {
-    // Top side
-    // restartGame()
-    // debugger;
-    // directionY = -directionY
-    directionX = 20;
-    directionY = 0;
-    // console.log('touched the sides')
-  }
-  else if (body[0].y >= canvas.height - snakeSizeY && body[0].x <= canvas.width) {
+  else if (body[0].x <= canvas.width - snakeSizeX && body[0].x >= 0
+     && body[0].y >= canvas.height - snakeSizeY && body[0].y <= canvas.height  ) {
     // Bottom side
     // debugger;
     // restartGame()
