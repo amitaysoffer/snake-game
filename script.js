@@ -1,7 +1,6 @@
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
 
-// Apple settings
 let appleLocationX;
 let appleLocationY;
 const appleSizeX = 20;
@@ -17,7 +16,7 @@ let isMoveDown = true
 let isMoveRight = false
 let isMoveLeft = false
 
-// Snake values
+// Snake start values
 let body = [
   { x: 60, y: 100 },
   { x: 40, y: 100 },
@@ -37,8 +36,6 @@ let score = 0
 
 appleReset();
 drawEverything();
-
-let runGame;
 
 function gameStart() {
   runGame = setInterval(function () {
@@ -91,7 +88,6 @@ function gameOver() {
     }
   }
 }
-
 function toggle(level) {
   if (level === 'easy') {
     document.getElementById('canvas').style.border = '10px solid black';
@@ -103,22 +99,18 @@ function toggle(level) {
 }
 
 function moveSnake() {
-  // debugger
   body[0].x += directionX;
   body[0].y += directionY;
 
   keepBodyCloseToHead();
-
   // keeps snake inside the game borders
   if (gameLevel === 'easy') {
     snakeRemainInBorders();
   } else {
     snakeCantTouchBorder();
   }
-
   // Snake head hits the body
   snakeHitOwnBody();
-
   // Snake hits the apple
   if (body[0].x === appleLocationX && body[0].y === appleLocationY) {
     appleReset();
@@ -174,7 +166,6 @@ function addBodyPartsToSnake() {
     bodyCopy.push({ x: bodyCopy[bodyCopy.length - 1].x - snakeSizeX, y: bodyCopy[bodyCopy.length - 1].y });
   }
 };
-
 
 function renderSnake() {
   for (let k = 0; body.length > k; k++) {
