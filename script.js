@@ -31,7 +31,6 @@ const snake = {
   ]
 }
 
-
 function moveSnake() {
   // move the snake head in the current direction
   snake.body[0].x += snakeSpeedX
@@ -39,25 +38,7 @@ function moveSnake() {
 
   snake.body[1].x = snake.body[0].x + 50
   snake.body[1].y = snake.body[0].y + 50
-  // snakeLocationY = snakeLocationY + snakeSpeedY
-
-  // snake.body[1].x = snake.body[0].x
-  // snake.body[1].y = snake.body[0].y
-
-  
-
-  // loop through each body part
-  // console.log(snake.body[0].x)
-  // for (let i = 0; snake.body.length; i++) {
-  // console.log(snake.body[i])
-  //  console.log(snake.body[0].x);   
-  //  console.log(snake.body[0].y);   
-  // }
-  // console.log(snakeLocationX)
-
-  // move the current body part to where it's parent was
 }
-
 
 let taleSizeX = 10;
 let taleSizeY = 10;
