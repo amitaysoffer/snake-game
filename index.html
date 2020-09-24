@@ -8,9 +8,29 @@
 </head>
 
 <body>
-  <h1 id="apple-list">Number of apples:</h1>
+  <h1 id="apple-list">Number of Apples:<span> 0</span></h1>
+  <div>
+    <button class="button button2" onclick="toggle('easy')">Deactivate sidelines</button>
+    <button class="button" onclick="toggle('normal')">Normal</button>
+  </div>
 
-  <canvas id="gameCanvas" width="800" height="600"></canvas>
+  <canvas id="canvas" width="800" height="600"></canvas>
+
+  <!-- The Modal -->
+  <div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>GAME OVER</h2>
+      </div>
+      <div id="modal-body">
+      </div>
+      <div class="modal-footer">
+        <h3>Press space bar to play again</h3>
+      </div>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>
