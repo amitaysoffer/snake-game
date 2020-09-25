@@ -45,60 +45,13 @@ function gameStart() {
 }
 gameStart();
 
-function gameOver() {
-  clearInterval(runGame);
-  const modal = document.getElementById("myModal");
-  modal.style.display = "block";
-
-  isMoveUp = false
-  isMoveDown = false
-  isMoveRight = false
-  isMoveLeft = false
-
-  document.body.onkeyup = function (e) {
-    if (e.keyCode == 32) {
-
-      modal.style.display = "none";
-      body = [
-        { x: 60, y: 100 },
-        { x: 40, y: 100 },
-        { x: 20, y: 100 },
-        { x: 0, y: 100 }
-      ]
-      bodyCopy = [
-        { x: 60, y: 100 },
-        { x: 40, y: 100 },
-        { x: 20, y: 100 },
-        { x: 0, y: 100 }
-      ]
-      directionX = 20;
-      directionY = 0;
-      isMoveSnakeStart = false
-      document.querySelector('span').innerHTML = '0'
-
-      isMoveUp = true
-      isMoveDown = true
-      isMoveRight = false
-      isMoveLeft = false
-
-      gameStart();
-      appleReset();
-    }
-  }
-}
-
-
 function moveSnakeHead() {
   body[0].x += directionX;
   body[0].y += directionY;
 
   moveSnakeBody();
-  
-  isBorders ? removeBorders() : addBorders();
-
   snakeHeadTouchesBody();
-
-  // Snake head touches apple
+  // If snake head touches apple
   if (body[0].x === appleLocationX && body[0].y === appleLocationY) {
     appleReset();
     addTaleToBody();
@@ -106,6 +59,8 @@ function moveSnakeHead() {
     document.querySelector('span').innerHTML++
     score++
   }
+
+  isBorders ? removeBorders() : addBorders();
 }
 
 function moveSnakeBody() {
@@ -267,6 +222,48 @@ document.addEventListener("keydown", function (e) {
     isMoveDown = false;
   }
 })
+
+function gameOver() {
+  clearInterval(runGame);
+  const modal = document.getElementById("myModal");
+  modal.style.display = "block";
+
+  isMoveUp = false
+  isMoveDown = false
+  isMoveRight = false
+  isMoveLeft = false
+
+  document.body.onkeyup = function (e) {
+    if (e.keyCode == 32) {
+
+      modal.style.display = "none";
+      body = [
+        { x: 60, y: 100 },
+        { x: 40, y: 100 },
+        { x: 20, y: 100 },
+        { x: 0, y: 100 }
+      ]
+      bodyCopy = [
+        { x: 60, y: 100 },
+        { x: 40, y: 100 },
+        { x: 20, y: 100 },
+        { x: 0, y: 100 }
+      ]
+      directionX = 20;
+      directionY = 0;
+      isMoveSnakeStart = false
+      document.querySelector('span').innerHTML = '0'
+
+      isMoveUp = true
+      isMoveDown = true
+      isMoveRight = false
+      isMoveLeft = false
+
+      gameStart();
+      appleReset();
+    }
+  }
+}
 
 // Activate/Deactivate borders button
 let isBorders = false;
