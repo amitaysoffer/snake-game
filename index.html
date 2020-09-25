@@ -8,13 +8,12 @@
 </head>
 
 <body>
-  <h1 id="apple-list">Number of Apples:<span> 0</span></h1>
-  <div>
-    <button class="button button2" onclick="toggle('easy')">Deactivate sidelines</button>
-    <button class="button" onclick="toggle('normal')">Normal</button>
-  </div>
+  <h1 id="header">Snake Game</h1>
+  <button class="button" onclick="toggleBordersActivation()">Activate sidelines</button>
 
   <canvas id="canvas" width="800" height="600"></canvas>
+
+  <h2 id="apple-list">Score: <span>0</span></h2>
 
   <!-- The Modal -->
   <div id="myModal" class="modal">

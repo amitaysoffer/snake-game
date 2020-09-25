@@ -1,14 +1,13 @@
-let canvas = document.getElementById("canvas");
-let ctx = canvas.getContext("2d");
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
 
-let appleLocationX;
-let appleLocationY;
 const appleSizeX = 20;
 const appleSizeY = 20;
 const snakeSizeX = 20;
 const snakeSizeY = 20;
 
-let gameLevel = 'normal';
+let appleLocationX;
+let appleLocationY;
 let isMoveSnakeStart = false
 
 let isMoveUp = true
@@ -29,18 +28,17 @@ let bodyCopy = [
   { x: 20, y: 100 },
   { x: 0, y: 100 }
 ]
+
 let directionX = 20;
 let directionY = 0;
-
 let score = 0
 
 appleReset();
 drawEverything();
-
 function gameStart() {
   runGame = setInterval(function () {
     if (isMoveSnakeStart) {
-      moveSnake();
+      moveSnakeHead();
     }
     drawEverything();
   }, 50);
@@ -88,40 +86,29 @@ function gameOver() {
     }
   }
 }
-function toggle(level) {
-  if (level === 'easy') {
-    document.getElementById('canvas').style.border = '10px solid black';
-    gameLevel = 'easy'
-  } else {
-    document.getElementById('canvas').style.border = '3px solid black';
-    gameLevel = 'normal'
-  }
-}
 
-function moveSnake() {
+
+function moveSnakeHead() {
   body[0].x += directionX;
   body[0].y += directionY;
 
-  keepBodyCloseToHead();
-  // keeps snake inside the game borders
-  if (gameLevel === 'easy') {
-    snakeRemainInBorders();
-  } else {
-    snakeCantTouchBorder();
-  }
-  // Snake head hits the body
-  snakeHitOwnBody();
-  // Snake hits the apple
+  moveSnakeBody();
+  
+  isBorders ? removeBorders() : addBorders();
+
+  snakeHeadTouchesBody();
+
+  // Snake head touches apple
   if (body[0].x === appleLocationX && body[0].y === appleLocationY) {
     appleReset();
-    addBodyPartsToSnake();
+    addTaleToBody();
 
     document.querySelector('span').innerHTML++
     score++
   }
 }
 
-function keepBodyCloseToHead() {
+function moveSnakeBody() {
   for (let i = 1; body.length > i; i++) {
     // Attach snake to head
     body[i].x = bodyCopy[i - 1].x
@@ -134,7 +121,7 @@ function keepBodyCloseToHead() {
   }
 }
 
-function snakeHitOwnBody() {
+function snakeHeadTouchesBody() {
   for (let i = 1; body.length > i; i++) {
     if (body[0].x === body[i].x && body[0].y === body[i].y) {
       console.log('Head touched the body');
@@ -143,7 +130,7 @@ function snakeHitOwnBody() {
   }
 }
 
-function addBodyPartsToSnake() {
+function addTaleToBody() {
   // Top to Bottom
   if (body[body.length - 1].x === body[body.length - 2].x && body[body.length - 1].y < body[body.length - 2].y) {
     body.push({ x: body[body.length - 1].x, y: body[body.length - 1].y - snakeSizeY });
@@ -191,11 +178,11 @@ function appleReset() {
   appleLocationX = Math.floor((Math.random() * canvas.width) + 1);
   appleLocationY = Math.floor((Math.random() * canvas.height) + 1);
 
-  // Verify sure apple doesn't render out of canvas
+  // Verify apple doesn't render out of canvas
   appleLocationX = appleLocationX > 780 ? 780 : appleLocationX
   appleLocationY = appleLocationY > 580 ? 580 : appleLocationY
 
-  // Verify apple is in the grid system
+  // Verify is in the grid system
   while (appleLocationY / 20 % 1) {
     appleLocationY = appleLocationY + 1
   }
@@ -214,65 +201,7 @@ function appleReset() {
   }
 }
 
-// Moving the snake with arrows 
-document.addEventListener("keydown", function (e) {
-  // debugger;
-  if (e.which === 39) {
-    // right
-    if (isMoveRight) {
-      directionX = 20;
-      directionY = 0;
-    }
-    isMoveRight = false;
-    isMoveLeft = false;
-    isMoveUp = true;
-    isMoveDown = true;
-    // isMoveDownUp = true
-    isMoveSnakeStart = true
-  }
-  if (e.which === 37) {
-    // left
-    if (isMoveLeft) {
-      directionX = -20;
-      directionY = 0;
-    }
-    isMoveRight = false;
-    isMoveLeft = false;
-    isMoveUp = true;
-    isMoveDown = true;
-
-    isMoveSnakeStart = true
-  }
-  if (e.which === 38) {
-    // up
-    if (isMoveUp) {
-      directionX = 0;
-      directionY = -20;
-    }
-    isMoveSnakeStart = true
-
-    isMoveRight = true;
-    isMoveLeft = true;
-    isMoveUp = false;
-    isMoveDown = false;
-  }
-  if (e.which === 40) {
-    // down
-    if (isMoveDown) {
-      // debugger;
-      directionX = 0;
-      directionY = 20;
-    }
-    isMoveSnakeStart = true
-
-    isMoveRight = true;
-    isMoveLeft = true;
-    isMoveUp = false;
-    isMoveDown = false;
-  }
-})
-
-function snakeCantTouchBorder() {
+function addBorders() {
   if (body[0].y >= 0 && body[0].y <= canvas.height && body[0].x == -snakeSizeX) {
     // Left side
     gameOver();
@@ -291,8 +220,72 @@ function snakeCantTouchBorder() {
   }
 }
 
-// Prevent snake from going off canvas
-function snakeRemainInBorders() {
+// Moving the snake with arrows 
+document.addEventListener("keydown", function (e) {
+  if (e.which === 39) {
+    if (isMoveRight) {
+      directionX = 20;
+      directionY = 0;
+    }
+    isMoveRight = false;
+    isMoveLeft = false;
+    isMoveUp = true;
+    isMoveDown = true;
+    isMoveSnakeStart = true
+  }
+  if (e.which === 37) {
+    if (isMoveLeft) {
+      directionX = -20;
+      directionY = 0;
+    }
+    isMoveRight = false;
+    isMoveLeft = false;
+    isMoveUp = true;
+    isMoveDown = true;
+    isMoveSnakeStart = true
+  }
+  if (e.which === 38) {
+    if (isMoveUp) {
+      directionX = 0;
+      directionY = -20;
+    }
+    isMoveSnakeStart = true
+    isMoveRight = true;
+    isMoveLeft = true;
+    isMoveUp = false;
+    isMoveDown = false;
+  }
+  if (e.which === 40) {
+    if (isMoveDown) {
+      directionX = 0;
+      directionY = 20;
+    }
+    isMoveSnakeStart = true
+    isMoveRight = true;
+    isMoveLeft = true;
+    isMoveUp = false;
+    isMoveDown = false;
+  }
+})
+
+// Activate/Deactivate borders button
+let isBorders = false;
+function toggleBordersActivation() {
+  // debugger
+  if (!isBorders) {
+    document.getElementById('canvas').style.border = '10px solid black';
+    document.getElementsByClassName('button')[0].innerText = 'Deactivate Sidelines'
+    document.getElementsByClassName('button')[0].classList.add('new-color')
+    isBorders = true
+  } else {
+    document.getElementById('canvas').style.border = '3px solid black';
+    document.getElementsByClassName('button')[0].innerText = 'Activate Sidelines'
+    document.getElementsByClassName('button')[0].classList.remove('new-color')
+    isBorders = false
+  }
+}
+
+function removeBorders() {
   if (body[0].y >= snakeSizeY && body[0].y <= canvas.height &&
     body[0].x >= 0 && body[0].x < snakeSizeX) {
     // Left side
