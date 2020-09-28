@@ -4,7 +4,7 @@
 
 Click [HERE](https://amitaysoffer.github.io/snake-game/) to start playing the game.
 
-![Screenshot 2020-09-28 at 22 08 54](https://user-images.githubusercontent.com/31068256/94486857-ea928780-01d7-11eb-846c-b2bcea328026.png)
+![Screenshot 2020-09-28 at 22 23 08](https://user-images.githubusercontent.com/31068256/94487681-4ad5f900-01d9-11eb-973c-095f172747b9.png)
 
 ![Screenshot 2020-09-28 at 22 10 35](https://user-images.githubusercontent.com/31068256/94486716-b7e88f00-01d7-11eb-88d5-b1ad5874ad94.png)
 
