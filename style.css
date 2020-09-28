@@ -17,17 +17,20 @@ body {
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
+  font-size: 18px;
   margin: 4px 2px;
   cursor: pointer;
   border-radius: 10px;
   background-color: #008CBA;
-  border: 2px solid #000;
+  border: 1px solid #000;
+  box-shadow: 0 9px #999;
+  outline: none;
 }
 
-.new-color {
-  background-color: #4CAF50;
-} 
+.button:active {
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
 
 h1 {
   width: 400px;
@@ -54,6 +57,11 @@ h2 {
   padding: 5px;
 }
 
+h3 {
+  font-size: 28px;
+  color: #000;
+}
+
 /* The Modal (background) */
 .modal {
   display: none; /* Hidden by default */
@@ -70,13 +78,14 @@ h2 {
 
 /* Modal Header */
 .modal-header {
-  padding: 20px 16px;
+  padding: 5px 5px 0px 5px;
   background-color: red;
   color: white;
+  border-bottom: 2px solid #fff;
 }
 
 /* Modal Body */
-.modal-body {padding: 2px 16px;}
+/* .modal-body {padding: 2px 16px;} */
 
 /* Modal Footer */
 .modal-footer {

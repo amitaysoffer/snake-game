@@ -15,6 +15,10 @@ let isMoveDown = true
 let isMoveRight = false
 let isMoveLeft = false
 
+let directionX = 20;
+let directionY = 0;
+
+let score = 0
 // Snake start values
 let body = [
   { x: 60, y: 100 },
@@ -29,9 +33,37 @@ let bodyCopy = [
   { x: 0, y: 100 }
 ]
 
-let directionX = 20;
-let directionY = 0;
-let score = 0
+let mineLocationX;
+let mineLocationY;
+let mines = [];
+
+function addMine() {
+  mineLocationX = Math.floor((Math.random() * canvas.width) + 1);
+  mineLocationY = Math.floor((Math.random() * canvas.height) + 1);
+
+  // Verify mine doesn't render out of canvas
+  mineLocationX = mineLocationX > 780 ? 780 : mineLocationX
+  mineLocationY = mineLocationY > 580 ? 580 : mineLocationY
+
+  // Verify is in the grid system
+  while (mineLocationY / 20 % 1) {
+    mineLocationY = mineLocationY + 1
+  }
+  while (mineLocationX / 20 % 1) {
+    mineLocationX = mineLocationX + 1
+  }
+
+    // Verify mine doesn't render on the snake
+    for (let i = 0; body.length > i; i++) {
+      for (let k = 0; body.length > k; k++) {
+        if (mineLocationX === body[i].x && mineLocationY === body[k].y) {
+          console.log('mine touched Snake when renders')
+          appleReset();
+        }
+      }
+    }
+  }
+  
 
 appleReset();
 drawEverything();
@@ -44,7 +76,7 @@ function gameStart() {
   }, 50);
 }
 gameStart();
-
+ 
 function moveSnakeHead() {
   body[0].x += directionX;
   body[0].y += directionY;
@@ -61,6 +93,7 @@ function moveSnakeHead() {
   }
 
   isBorders ? removeBorders() : addBorders();
+  // isMines ? removeBorders() : addBorders();
 }
 
 function moveSnakeBody() {
@@ -79,35 +112,11 @@ function moveSnakeBody() {
 function snakeHeadTouchesBody() {
   for (let i = 1; body.length > i; i++) {
     if (body[0].x === body[i].x && body[0].y === body[i].y) {
-      console.log('Head touched the body');
-      gameOver();
+      gameOver('Snake head touched body!');
     }
   }
 }
 
-function addTaleToBody() {
-  // Top to Bottom
-  if (body[body.length - 1].x === body[body.length - 2].x && body[body.length - 1].y < body[body.length - 2].y) {
-    body.push({ x: body[body.length - 1].x, y: body[body.length - 1].y - snakeSizeY });
-
-    bodyCopy.push({ x: bodyCopy[bodyCopy.length - 1].x, y: bodyCopy[bodyCopy.length - 1].y - snakeSizeY });
-    // Bottom to Top
-  } else if (body[body.length - 1].x === body[body.length - 2].x && body[body.length - 1].y > body[body.length - 2].y) {
-    body.push({ x: body[body.length - 1].x, y: body[body.length - 1].y + snakeSizeY });
-
-    bodyCopy.push({ x: bodyCopy[bodyCopy.length - 1].x, y: bodyCopy[bodyCopy.length - 1].y + snakeSizeY });
-    // Right to Left
-  } else if (body[body.length - 1].y === body[body.length - 2].y && body[body.length - 1].x > body[body.length - 2].x) {
-    body.push({ x: body[body.length - 1].x + snakeSizeX, y: body[body.length - 1].y });
-
-    bodyCopy.push({ x: bodyCopy[bodyCopy.length - 1].x + snakeSizeX, y: bodyCopy[bodyCopy.length - 1].y });
-    // Left to Right
-  } else if (body[body.length - 1].y === body[body.length - 2].y && body[body.length - 1].x < body[body.length - 2].x) {
-    body.push({ x: body[body.length - 1].x - snakeSizeX, y: body[body.length - 1].y });
-
-    bodyCopy.push({ x: bodyCopy[bodyCopy.length - 1].x - snakeSizeX, y: bodyCopy[bodyCopy.length - 1].y });
-  }
-};
 
 function renderSnake() {
   for (let k = 0; body.length > k; k++) {
@@ -159,74 +168,38 @@ function appleReset() {
 function addBorders() {
   if (body[0].y >= 0 && body[0].y <= canvas.height && body[0].x == -snakeSizeX) {
     // Left side
-    gameOver();
+    gameOver('Snake touched the left border!');
   }
   else if (body[0].x >= 0 && body[0].x <= canvas.width && body[0].y == -snakeSizeY) {
     // Top side
-    gameOver();
+    gameOver('Snake touched the top border!');
   } else if (body[0].x == canvas.width && body[0].y >= 0 &&
     body[0].y <= canvas.height) {
     // Right side
-    gameOver();
+    gameOver('Snake touched the right border!');
   }
   else if (body[0].x >= 0 && body[0].x <= canvas.width && body[0].y == canvas.height) {
     // Bottom side
-    gameOver();
+    gameOver('Snake touched the bottom border!');
   }
 }
 
-// Moving the snake with arrows 
-document.addEventListener("keydown", function (e) {
-  if (e.which === 39) {
-    if (isMoveRight) {
-      directionX = 20;
-      directionY = 0;
-    }
-    isMoveRight = false;
-    isMoveLeft = false;
-    isMoveUp = true;
-    isMoveDown = true;
-    isMoveSnakeStart = true
-  }
-  if (e.which === 37) {
-    if (isMoveLeft) {
-      directionX = -20;
-      directionY = 0;
-    }
-    isMoveRight = false;
-    isMoveLeft = false;
-    isMoveUp = true;
-    isMoveDown = true;
-    isMoveSnakeStart = true
-  }
-  if (e.which === 38) {
-    if (isMoveUp) {
-      directionX = 0;
-      directionY = -20;
-    }
-    isMoveSnakeStart = true
-    isMoveRight = true;
-    isMoveLeft = true;
-    isMoveUp = false;
-    isMoveDown = false;
-  }
-  if (e.which === 40) {
-    if (isMoveDown) {
-      directionX = 0;
-      directionY = 20;
-    }
-    isMoveSnakeStart = true
-    isMoveRight = true;
-    isMoveLeft = true;
-    isMoveUp = false;
-    isMoveDown = false;
-  }
-})
 
-function gameOver() {
+function gameOver(message) {
   clearInterval(runGame);
   const modal = document.getElementById("myModal");
   modal.style.display = "block";
+  // debugger
+
+  const h3 = document.createElement('h3');
+  if (document.getElementsByClassName('modal-header')[0].childElementCount > 1
+  ) {
+    document.getElementsByClassName('modal-header')[0].lastElementChild.remove()
+  }
+  const failedMessage = document.createTextNode(message);
+  h3.appendChild(failedMessage);
+  document.getElementsByClassName('modal-header')[0].appendChild(h3);
+
 
   isMoveUp = false
   isMoveDown = false
@@ -266,21 +239,56 @@ function gameOver() {
 }
 
 // Activate/Deactivate borders button
+let isMines = false;
+function toggleMinesActivation() {
+  // debugger
+  if (!isMines) {
+    console.log('mines ON')
+    isMines = true
+  } else {
+    console.log('mines OFF')
+    isMines = false
+  }
+}
+
+// Activate/Deactivate mines button
 let isBorders = false;
 function toggleBordersActivation() {
   // debugger
   if (!isBorders) {
     document.getElementById('canvas').style.border = '10px solid black';
     document.getElementsByClassName('button')[0].innerText = 'Deactivate Sidelines'
-    document.getElementsByClassName('button')[0].classList.add('new-color')
     isBorders = true
   } else {
-    document.getElementById('canvas').style.border = '3px solid black';
+    document.getElementById('canvas').style.border = '1px solid black';
     document.getElementsByClassName('button')[0].innerText = 'Activate Sidelines'
-    document.getElementsByClassName('button')[0].classList.remove('new-color')
     isBorders = false
   }
 }
+
+function addTaleToBody() {
+  // Top to Bottom
+  if (body[body.length - 1].x === body[body.length - 2].x && body[body.length - 1].y < body[body.length - 2].y) {
+    body.push({ x: body[body.length - 1].x, y: body[body.length - 1].y - snakeSizeY });
+
+    bodyCopy.push({ x: bodyCopy[bodyCopy.length - 1].x, y: bodyCopy[bodyCopy.length - 1].y - snakeSizeY });
+    // Bottom to Top
+  } else if (body[body.length - 1].x === body[body.length - 2].x && body[body.length - 1].y > body[body.length - 2].y) {
+    body.push({ x: body[body.length - 1].x, y: body[body.length - 1].y + snakeSizeY });
+
+    bodyCopy.push({ x: bodyCopy[bodyCopy.length - 1].x, y: bodyCopy[bodyCopy.length - 1].y + snakeSizeY });
+    // Right to Left
+  } else if (body[body.length - 1].y === body[body.length - 2].y && body[body.length - 1].x > body[body.length - 2].x) {
+    body.push({ x: body[body.length - 1].x + snakeSizeX, y: body[body.length - 1].y });
+
+    bodyCopy.push({ x: bodyCopy[bodyCopy.length - 1].x + snakeSizeX, y: bodyCopy[bodyCopy.length - 1].y });
+    // Left to Right
+  } else if (body[body.length - 1].y === body[body.length - 2].y && body[body.length - 1].x < body[body.length - 2].x) {
+    body.push({ x: body[body.length - 1].x - snakeSizeX, y: body[body.length - 1].y });
+
+    bodyCopy.push({ x: bodyCopy[bodyCopy.length - 1].x - snakeSizeX, y: bodyCopy[bodyCopy.length - 1].y });
+  }
+};
 
 function removeBorders() {
   if (body[0].y >= snakeSizeY && body[0].y <= canvas.height &&
@@ -331,3 +339,51 @@ function removeBorders() {
   }
 }
 
+
+// Moving the snake with arrows 
+document.addEventListener("keydown", function (e) {
+  if (e.which === 39) {
+    if (isMoveRight) {
+      directionX = 20;
+      directionY = 0;
+    }
+    isMoveRight = false;
+    isMoveLeft = false;
+    isMoveUp = true;
+    isMoveDown = true;
+    isMoveSnakeStart = true
+  }
+  if (e.which === 37) {
+    if (isMoveLeft) {
+      directionX = -20;
+      directionY = 0;
+    }
+    isMoveRight = false;
+    isMoveLeft = false;
+    isMoveUp = true;
+    isMoveDown = true;
+    isMoveSnakeStart = true
+  }
+  if (e.which === 38) {
+    if (isMoveUp) {
+      directionX = 0;
+      directionY = -20;
+    }
+    isMoveSnakeStart = true
+    isMoveRight = true;
+    isMoveLeft = true;
+    isMoveUp = false;
+    isMoveDown = false;
+  }
+  if (e.which === 40) {
+    if (isMoveDown) {
+      directionX = 0;
+      directionY = 20;
+    }
+    isMoveSnakeStart = true
+    isMoveRight = true;
+    isMoveLeft = true;
+    isMoveUp = false;
+    isMoveDown = false;
+  }
+})
