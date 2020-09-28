@@ -8,6 +8,10 @@ const snakeSizeY = 20;
 
 let appleLocationX;
 let appleLocationY;
+let mineLocationX;
+let mineLocationY;
+let mines = [];
+
 let isMoveSnakeStart = false
 
 let isMoveUp = true
@@ -19,6 +23,13 @@ let directionX = 20;
 let directionY = 0;
 
 let score = 0
+
+let currentHighScore = !localStorage.getItem('highest-score') ? 0 :
+  localStorage.getItem('highest-score');
+
+// Set LS
+document.querySelectorAll('span')[0].innerText = currentHighScore
+
 // Snake start values
 let body = [
   { x: 60, y: 100 },
@@ -33,9 +44,6 @@ let bodyCopy = [
   { x: 0, y: 100 }
 ]
 
-let mineLocationX;
-let mineLocationY;
-let mines = [];
 
 function addMine() {
   mineLocationX = Math.floor((Math.random() * canvas.width) + 1);
@@ -53,17 +61,19 @@ function addMine() {
     mineLocationX = mineLocationX + 1
   }
 
-    // Verify mine doesn't render on the snake
-    for (let i = 0; body.length > i; i++) {
-      for (let k = 0; body.length > k; k++) {
-        if (mineLocationX === body[i].x && mineLocationY === body[k].y) {
-          console.log('mine touched Snake when renders')
-          appleReset();
-        }
+  // Verify mine doesn't render on the snake
+  for (let i = 0; body.length > i; i++) {
+    for (let k = 0; body.length > k; k++) {
+      if (mineLocationX === body[i].x && mineLocationY === body[k].y) {
+        appleReset();
       }
     }
   }
-  
+  mines.push({
+    mineLocationX: mineLocationX,
+    mineLocationY: mineLocationY,
+  })
+}
 
 appleReset();
 drawEverything();
@@ -76,7 +86,7 @@ function gameStart() {
   }, 50);
 }
 gameStart();
- 
+
 function moveSnakeHead() {
   body[0].x += directionX;
   body[0].y += directionY;
@@ -87,13 +97,21 @@ function moveSnakeHead() {
   if (body[0].x === appleLocationX && body[0].y === appleLocationY) {
     appleReset();
     addTaleToBody();
-
-    document.querySelector('span').innerHTML++
+    // debugger
+    document.querySelectorAll('span')[1].innerHTML++
     score++
+    // add mines
+    if (isMines) {
+      addMine();
+    }
   }
 
+  for (let i = 0; mines.length > i; i++) {
+    if (body[0].x === mines[i].mineLocationX && body[0].y === mines[i].mineLocationY) {
+      gameOver('mine')
+    }
+  }
   isBorders ? removeBorders() : addBorders();
-  // isMines ? removeBorders() : addBorders();
 }
 
 function moveSnakeBody() {
@@ -112,11 +130,10 @@ function moveSnakeBody() {
 function snakeHeadTouchesBody() {
   for (let i = 1; body.length > i; i++) {
     if (body[0].x === body[i].x && body[0].y === body[i].y) {
-      gameOver('Snake head touched body!');
+      gameOver('Body');
     }
   }
 }
-
 
 function renderSnake() {
   for (let k = 0; body.length > k; k++) {
@@ -131,6 +148,10 @@ function drawEverything() {
   renderSnake();
   // Apple
   renderRect(appleLocationX, appleLocationY, appleSizeX, appleSizeY, 'red')
+  // Mines
+  for (let i = 0; mines.length > i; i++) {
+    renderRect(mines[i].mineLocationX, mines[i].mineLocationY, appleSizeX, appleSizeY, 'black')
+  }
 }
 
 function renderRect(leftX, topY, width, height, drawColor) {
@@ -158,7 +179,6 @@ function appleReset() {
   for (let i = 0; body.length > i; i++) {
     for (let k = 0; body.length > k; k++) {
       if (appleLocationX === body[i].x && appleLocationY === body[k].y) {
-        console.log('Apple touched Snake when renders')
         appleReset();
       }
     }
@@ -168,46 +188,54 @@ function appleReset() {
 function addBorders() {
   if (body[0].y >= 0 && body[0].y <= canvas.height && body[0].x == -snakeSizeX) {
     // Left side
-    gameOver('Snake touched the left border!');
+    gameOver('Left');
   }
   else if (body[0].x >= 0 && body[0].x <= canvas.width && body[0].y == -snakeSizeY) {
     // Top side
-    gameOver('Snake touched the top border!');
+    gameOver('Top');
   } else if (body[0].x == canvas.width && body[0].y >= 0 &&
     body[0].y <= canvas.height) {
     // Right side
-    gameOver('Snake touched the right border!');
+    gameOver('Right');
   }
   else if (body[0].x >= 0 && body[0].x <= canvas.width && body[0].y == canvas.height) {
     // Bottom side
-    gameOver('Snake touched the bottom border!');
+    gameOver('Bottom');
   }
 }
 
-
-function gameOver(message) {
+function gameOver(location) {
   clearInterval(runGame);
   const modal = document.getElementById("myModal");
   modal.style.display = "block";
-  // debugger
 
-  const h3 = document.createElement('h3');
+  // Set Local Storage
+  if (currentHighScore < score) {
+    localStorage.setItem('highest-score', score);
+    currentHighScore = localStorage.getItem('highest-score');
+    document.querySelectorAll('span')[0].innerText = currentHighScore
+  }
+
+  const div = document.createElement('div');
   if (document.getElementsByClassName('modal-header')[0].childElementCount > 1
   ) {
     document.getElementsByClassName('modal-header')[0].lastElementChild.remove()
   }
-  const failedMessage = document.createTextNode(message);
-  h3.appendChild(failedMessage);
-  document.getElementsByClassName('modal-header')[0].appendChild(h3);
 
-
-  isMoveUp = false
-  isMoveDown = false
-  isMoveRight = false
-  isMoveLeft = false
+  div.innerHTML = `
+    <h3>Place of collision: ${location}</h3>
+    <h3>Number of apples: ${score}</h3>
+    <h3>Highest score: ${currentHighScore}</h3>
+  `
+  document.getElementsByClassName('modal-header')[0].appendChild(div);
 
   document.body.onkeyup = function (e) {
     if (e.keyCode == 32) {
+
+      isMoveUp = false
+      isMoveDown = false
+      isMoveRight = false
+      isMoveLeft = false
 
       modal.style.display = "none";
       body = [
@@ -224,8 +252,11 @@ function gameOver(message) {
       ]
       directionX = 20;
       directionY = 0;
+
+      mines = []
+      score = 0;
       isMoveSnakeStart = false
-      document.querySelector('span').innerHTML = '0'
+      document.querySelectorAll('span')[1].innerHTML = '0'
 
       isMoveUp = true
       isMoveDown = true
@@ -234,34 +265,42 @@ function gameOver(message) {
 
       gameStart();
       appleReset();
+
+      e.preventDefault();
     }
   }
 }
 
-// Activate/Deactivate borders button
+// Activate/Deactivate mines button
 let isMines = false;
 function toggleMinesActivation() {
   // debugger
   if (!isMines) {
-    console.log('mines ON')
+    document.getElementsByClassName('btn-mine')[0].innerHTML = `<i
+    class="fas fa-bomb"></i> Deactivate Mines <i class='fas fa-bomb'></i>`
+    document.getElementsByClassName('btn-mine')[0].classList.add('red-border')
     isMines = true
   } else {
-    console.log('mines OFF')
+    document.getElementsByClassName('btn-mine')[0].innerHTML = `<i
+    class="fas fa-bomb"></i> Activate Mines <i class='fas fa-bomb'></i>`
+    document.getElementsByClassName('btn-mine')[0].classList.remove('red-border')
     isMines = false
   }
 }
 
-// Activate/Deactivate mines button
+// Activate/Deactivate Sidelines button
 let isBorders = false;
 function toggleBordersActivation() {
   // debugger
   if (!isBorders) {
     document.getElementById('canvas').style.border = '10px solid black';
-    document.getElementsByClassName('button')[0].innerText = 'Deactivate Sidelines'
+    document.getElementsByClassName('btn-border')[0].innerHTML = `<i class='fas fa-crop-alt'></i> Deactivate Sidelines <i class='fas fa-crop-alt'></i>`
+    document.getElementsByClassName('btn-border')[0].classList.add('red-border')
     isBorders = true
   } else {
-    document.getElementById('canvas').style.border = '1px solid black';
-    document.getElementsByClassName('button')[0].innerText = 'Activate Sidelines'
+    document.getElementById('canvas').style.border = '2px solid black';
+    document.getElementsByClassName('btn-border')[0].innerHTML = `<i class='fas fa-crop-alt'></i> Activate Sidelines <i class="fas fa-crop-alt"></i>`
+    document.getElementsByClassName('btn-border')[0].classList.remove('red-border')
     isBorders = false
   }
 }
@@ -339,6 +378,39 @@ function removeBorders() {
   }
 }
 
+function changeCanvasSize(size) {
+  const sizeElement = document.getElementById(size);
+  for (let i = 0; 4 > i; i++) {
+    document.getElementsByClassName('size')[i].classList.remove('red-color');
+  }
+  document.getElementsByClassName('row')[0].classList.remove('flex-flow');
+  if (size === 'big') {
+    canvas.width = 1100
+    canvas.height = 700
+    sizeElement.classList.add('red-color');
+    document.body.style.width = '1100px'
+    appleReset();
+  } else if (size === 'medium') {
+    canvas.width = 800
+    canvas.height = 600
+    sizeElement.classList.add('red-color');
+    document.body.style.width = '800px'
+    appleReset();
+  } else if (size === 'small') {
+    canvas.width = 600
+    canvas.height = 400
+    sizeElement.classList.add('red-color');
+    document.body.style.width = '600px'
+    appleReset();
+  } else if (size === 'petite') {
+    canvas.width = 350
+    canvas.height = 499
+    sizeElement.classList.add('red-color');
+    document.body.style.width = '400px'
+    document.getElementsByClassName('row')[0].classList.add('flex-flow');
+    appleReset();
+  }
+}
 
 // Moving the snake with arrows 
 document.addEventListener("keydown", function (e) {

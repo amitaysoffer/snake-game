@@ -3,18 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+    integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
+    crossorigin="anonymous" />
   <link rel="stylesheet" href="style.css">
   <title>Snake Game</title>
 </head>
 
 <body>
   <h1 id="header">Snake Game</h1>
-  <button class="button btn-border" onclick="toggleBordersActivation()">Activate sidelines</button>
-  <button class="button btn-mine" onclick="toggleMinesActivation()">Activate Mines feature</button>
+  <div class="row">
+    <button class="button btn-border" onclick="toggleBordersActivation()"><i class="fas fa-crop-alt"></i> Activate
+      Sidelines <i class="fas fa-crop-alt"></i></button>
+
+    <button class="button btn-mine" onclick="toggleMinesActivation()"><i class="fas fa-bomb"></i> Activate Mines <i
+        class="fas fa-bomb"></i></button>
+
+    <a onclick="changeCanvasSize('big')" href="#" id="big" class="size size-big"><i
+        class="fas fa-desktop fa-5x"></i></a>
+    <a onclick="changeCanvasSize('medium')" href="#" id="medium" class="size size-medium red-color"><i
+        class="fas fa-desktop fa-4x"></i></a>
+    <a onclick="changeCanvasSize('small')" href="#" id="small" class="size size-small"><i
+        class="fas fa-desktop fa-3x"></i></a>
+    <a onclick="changeCanvasSize('petite')" href="#" id="petite" class="size size-small"><i
+        class="fas fa-mobile fa-3x"></i></a>
+  </div>
+
 
   <canvas id="canvas" width="800" height="600"></canvas>
 
-  <h2 id="apple-list">Score: <span>0</span></h2>
+
+  <h2 id="score">Highest Score: <span>0</span> <i class="fas fa-apple-alt"></i></h2>
+  <h2 id="highest-score">Current Score: <span>0</span> <i class="fas fa-apple-alt"></i></h2>
+
 
   <!-- The Modal -->
   <div id="myModal" class="modal">
