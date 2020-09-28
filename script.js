@@ -153,25 +153,6 @@ function appleReset() {
   }
 }
 
-function addBorders() {
-  if (body[0].y >= 0 && body[0].y <= canvas.height && body[0].x == -snakeSizeX) {
-    // Left side
-    gameOver('Left border');
-  }
-  else if (body[0].x >= 0 && body[0].x <= canvas.width && body[0].y == -snakeSizeY) {
-    // Top side
-    gameOver('Top border');
-  } else if (body[0].x == canvas.width && body[0].y >= 0 &&
-    body[0].y <= canvas.height) {
-    // Right side
-    gameOver('Right border');
-  }
-  else if (body[0].x >= 0 && body[0].x <= canvas.width && body[0].y == canvas.height) {
-    // Bottom side
-    gameOver('Bottom border');
-  }
-}
-
 let isGameOn = true;
 function gameOver(location) {
   clearInterval(runGame);
@@ -241,6 +222,30 @@ function gameOver(location) {
   }
 }
 
+function addTaleToBody() {
+  // Top to Bottom
+  if (body[body.length - 1].x === body[body.length - 2].x && body[body.length - 1].y < body[body.length - 2].y) {
+    body.push({ x: body[body.length - 1].x, y: body[body.length - 1].y - snakeSizeY });
+
+    bodyCopy.push({ x: bodyCopy[bodyCopy.length - 1].x, y: bodyCopy[bodyCopy.length - 1].y - snakeSizeY });
+    // Bottom to Top
+  } else if (body[body.length - 1].x === body[body.length - 2].x && body[body.length - 1].y > body[body.length - 2].y) {
+    body.push({ x: body[body.length - 1].x, y: body[body.length - 1].y + snakeSizeY });
+
+    bodyCopy.push({ x: bodyCopy[bodyCopy.length - 1].x, y: bodyCopy[bodyCopy.length - 1].y + snakeSizeY });
+    // Right to Left
+  } else if (body[body.length - 1].y === body[body.length - 2].y && body[body.length - 1].x > body[body.length - 2].x) {
+    body.push({ x: body[body.length - 1].x + snakeSizeX, y: body[body.length - 1].y });
+
+    bodyCopy.push({ x: bodyCopy[bodyCopy.length - 1].x + snakeSizeX, y: bodyCopy[bodyCopy.length - 1].y });
+    // Left to Right
+  } else if (body[body.length - 1].y === body[body.length - 2].y && body[body.length - 1].x < body[body.length - 2].x) {
+    body.push({ x: body[body.length - 1].x - snakeSizeX, y: body[body.length - 1].y });
+
+    bodyCopy.push({ x: bodyCopy[bodyCopy.length - 1].x - snakeSizeX, y: bodyCopy[bodyCopy.length - 1].y });
+  }
+};
+
 // Activate/Deactivate mines button
 let isMines = false;
 function toggleMinesActivation() {
@@ -273,29 +278,24 @@ function toggleBordersActivation() {
   }
 }
 
-function addTaleToBody() {
-  // Top to Bottom
-  if (body[body.length - 1].x === body[body.length - 2].x && body[body.length - 1].y < body[body.length - 2].y) {
-    body.push({ x: body[body.length - 1].x, y: body[body.length - 1].y - snakeSizeY });
-
-    bodyCopy.push({ x: bodyCopy[bodyCopy.length - 1].x, y: bodyCopy[bodyCopy.length - 1].y - snakeSizeY });
-    // Bottom to Top
-  } else if (body[body.length - 1].x === body[body.length - 2].x && body[body.length - 1].y > body[body.length - 2].y) {
-    body.push({ x: body[body.length - 1].x, y: body[body.length - 1].y + snakeSizeY });
-
-    bodyCopy.push({ x: bodyCopy[bodyCopy.length - 1].x, y: bodyCopy[bodyCopy.length - 1].y + snakeSizeY });
-    // Right to Left
-  } else if (body[body.length - 1].y === body[body.length - 2].y && body[body.length - 1].x > body[body.length - 2].x) {
-    body.push({ x: body[body.length - 1].x + snakeSizeX, y: body[body.length - 1].y });
-
-    bodyCopy.push({ x: bodyCopy[bodyCopy.length - 1].x + snakeSizeX, y: bodyCopy[bodyCopy.length - 1].y });
-    // Left to Right
-  } else if (body[body.length - 1].y === body[body.length - 2].y && body[body.length - 1].x < body[body.length - 2].x) {
-    body.push({ x: body[body.length - 1].x - snakeSizeX, y: body[body.length - 1].y });
-
-    bodyCopy.push({ x: bodyCopy[bodyCopy.length - 1].x - snakeSizeX, y: bodyCopy[bodyCopy.length - 1].y });
+function addBorders() {
+  if (body[0].y >= 0 && body[0].y <= canvas.height && body[0].x == -snakeSizeX) {
+    // Left side
+    gameOver('Left border');
   }
-};
+  else if (body[0].x >= 0 && body[0].x <= canvas.width && body[0].y == -snakeSizeY) {
+    // Top side
+    gameOver('Top border');
+  } else if (body[0].x == canvas.width && body[0].y >= 0 &&
+    body[0].y <= canvas.height) {
+    // Right side
+    gameOver('Right border');
+  }
+  else if (body[0].x >= 0 && body[0].x <= canvas.width && body[0].y == canvas.height) {
+    // Bottom side
+    gameOver('Bottom border');
+  }
+}
 
 function removeBorders() {
   if (body[0].y >= snakeSizeY && body[0].y <= canvas.height &&
