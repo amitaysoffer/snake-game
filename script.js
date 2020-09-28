@@ -403,8 +403,8 @@ function changeCanvasSize(size) {
     document.body.style.width = '600px'
     appleReset();
   } else if (size === 'petite') {
-    canvas.width = 350
-    canvas.height = 499
+    canvas.width = 300
+    canvas.height = 500
     sizeElement.classList.add('red-color');
     document.body.style.width = '400px'
     document.getElementsByClassName('row')[0].classList.add('flex-flow');
