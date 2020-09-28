@@ -76,7 +76,7 @@ function moveSnakeHead() {
 
   for (let i = 0; mines.length > i; i++) {
     if (body[0].x === mines[i].mineLocationX && body[0].y === mines[i].mineLocationY) {
-      gameOver('mine')
+      gameOver('A Mine!')
     }
   }
   isBorders ? removeBorders() : addBorders();
@@ -105,7 +105,7 @@ function snakeHeadTouchesBody() {
 
 function renderSnake() {
   for (let k = 0; body.length > k; k++) {
-    renderRect(body[k].x, body[k].y, snakeSizeX, snakeSizeY, "green");
+    renderRect(body[k].x, body[k].y, snakeSizeX, snakeSizeY, 'green');
   }
 }
 
@@ -156,19 +156,19 @@ function appleReset() {
 function addBorders() {
   if (body[0].y >= 0 && body[0].y <= canvas.height && body[0].x == -snakeSizeX) {
     // Left side
-    gameOver('Left');
+    gameOver('Left border');
   }
   else if (body[0].x >= 0 && body[0].x <= canvas.width && body[0].y == -snakeSizeY) {
     // Top side
-    gameOver('Top');
+    gameOver('Top border');
   } else if (body[0].x == canvas.width && body[0].y >= 0 &&
     body[0].y <= canvas.height) {
     // Right side
-    gameOver('Right');
+    gameOver('Right border');
   }
   else if (body[0].x >= 0 && body[0].x <= canvas.width && body[0].y == canvas.height) {
     // Bottom side
-    gameOver('Bottom');
+    gameOver('Bottom border');
   }
 }
 
@@ -192,7 +192,7 @@ function gameOver(location) {
   }
   div.innerHTML = `
     <h3>Place of collision: ${location}</h3>
-    <h3>Number of apples: ${score}</h3>
+    <h3>Apples collected: ${score}</h3>
     <h3>Highest score: ${currentHighScore}</h3>
   `
   document.getElementsByClassName('modal-header')[0].appendChild(div);
