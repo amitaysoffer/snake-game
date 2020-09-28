@@ -44,37 +44,6 @@ let bodyCopy = [
   { x: 0, y: 100 }
 ]
 
-
-function addMine() {
-  mineLocationX = Math.floor((Math.random() * canvas.width) + 1);
-  mineLocationY = Math.floor((Math.random() * canvas.height) + 1);
-
-  // Verify mine doesn't render out of canvas
-  mineLocationX = mineLocationX > 780 ? 780 : mineLocationX
-  mineLocationY = mineLocationY > 580 ? 580 : mineLocationY
-
-  // Verify is in the grid system
-  while (mineLocationY / 20 % 1) {
-    mineLocationY = mineLocationY + 1
-  }
-  while (mineLocationX / 20 % 1) {
-    mineLocationX = mineLocationX + 1
-  }
-
-  // Verify mine doesn't render on the snake
-  for (let i = 0; body.length > i; i++) {
-    for (let k = 0; body.length > k; k++) {
-      if (mineLocationX === body[i].x && mineLocationY === body[k].y) {
-        appleReset();
-      }
-    }
-  }
-  mines.push({
-    mineLocationX: mineLocationX,
-    mineLocationY: mineLocationY,
-  })
-}
-
 appleReset();
 drawEverything();
 function gameStart() {
@@ -93,14 +62,13 @@ function moveSnakeHead() {
 
   moveSnakeBody();
   snakeHeadTouchesBody();
-  // If snake head touches apple
+  // If snake head collides into apple
   if (body[0].x === appleLocationX && body[0].y === appleLocationY) {
     appleReset();
     addTaleToBody();
-    // debugger
     document.querySelectorAll('span')[1].innerHTML++
     score++
-    // add mines
+
     if (isMines) {
       addMine();
     }
@@ -204,6 +172,7 @@ function addBorders() {
   }
 }
 
+let isGameOn = true;
 function gameOver(location) {
   clearInterval(runGame);
   const modal = document.getElementById("myModal");
@@ -221,7 +190,6 @@ function gameOver(location) {
   ) {
     document.getElementsByClassName('modal-header')[0].lastElementChild.remove()
   }
-
   div.innerHTML = `
     <h3>Place of collision: ${location}</h3>
     <h3>Number of apples: ${score}</h3>
@@ -229,44 +197,46 @@ function gameOver(location) {
   `
   document.getElementsByClassName('modal-header')[0].appendChild(div);
 
+  isGameOn = false;
   document.body.onkeyup = function (e) {
-    if (e.keyCode == 32) {
+    if (e.which == 32) {
+      if (!isGameOn) {
+        isGameOn = true
 
-      isMoveUp = false
-      isMoveDown = false
-      isMoveRight = false
-      isMoveLeft = false
+        isMoveUp = false
+        isMoveDown = false
+        isMoveRight = false
+        isMoveLeft = false
 
-      modal.style.display = "none";
-      body = [
-        { x: 60, y: 100 },
-        { x: 40, y: 100 },
-        { x: 20, y: 100 },
-        { x: 0, y: 100 }
-      ]
-      bodyCopy = [
-        { x: 60, y: 100 },
-        { x: 40, y: 100 },
-        { x: 20, y: 100 },
-        { x: 0, y: 100 }
-      ]
-      directionX = 20;
-      directionY = 0;
+        modal.style.display = "none";
+        body = [
+          { x: 60, y: 100 },
+          { x: 40, y: 100 },
+          { x: 20, y: 100 },
+          { x: 0, y: 100 }
+        ]
+        bodyCopy = [
+          { x: 60, y: 100 },
+          { x: 40, y: 100 },
+          { x: 20, y: 100 },
+          { x: 0, y: 100 }
+        ]
+        directionX = 20;
+        directionY = 0;
 
-      mines = []
-      score = 0;
-      isMoveSnakeStart = false
-      document.querySelectorAll('span')[1].innerHTML = '0'
+        mines = []
+        score = 0;
+        isMoveSnakeStart = false
+        document.querySelectorAll('span')[1].innerHTML = '0'
 
-      isMoveUp = true
-      isMoveDown = true
-      isMoveRight = false
-      isMoveLeft = false
+        isMoveUp = true
+        isMoveDown = true
+        isMoveRight = false
+        isMoveLeft = false
 
-      gameStart();
-      appleReset();
-
-      e.preventDefault();
+        gameStart();
+        appleReset();
+      }
     }
   }
 }
@@ -274,7 +244,6 @@ function gameOver(location) {
 // Activate/Deactivate mines button
 let isMines = false;
 function toggleMinesActivation() {
-  // debugger
   if (!isMines) {
     document.getElementsByClassName('btn-mine')[0].innerHTML = `<i
     class="fas fa-bomb"></i> Deactivate Mines <i class='fas fa-bomb'></i>`
@@ -291,7 +260,6 @@ function toggleMinesActivation() {
 // Activate/Deactivate Sidelines button
 let isBorders = false;
 function toggleBordersActivation() {
-  // debugger
   if (!isBorders) {
     document.getElementById('canvas').style.border = '10px solid black';
     document.getElementsByClassName('btn-border')[0].innerHTML = `<i class='fas fa-crop-alt'></i> Deactivate Sidelines <i class='fas fa-crop-alt'></i>`
@@ -376,6 +344,36 @@ function removeBorders() {
     isMoveUp = true;
     isMoveDown = false;
   }
+}
+
+function addMine() {
+  mineLocationX = Math.floor((Math.random() * canvas.width) + 1);
+  mineLocationY = Math.floor((Math.random() * canvas.height) + 1);
+
+  // Verify mine doesn't render out of canvas
+  mineLocationX = mineLocationX > 780 ? 780 : mineLocationX
+  mineLocationY = mineLocationY > 580 ? 580 : mineLocationY
+
+  // Verify is in the grid system
+  while (mineLocationY / 20 % 1) {
+    mineLocationY = mineLocationY + 1
+  }
+  while (mineLocationX / 20 % 1) {
+    mineLocationX = mineLocationX + 1
+  }
+
+  // Verify mine doesn't render on the snake
+  for (let i = 0; body.length > i; i++) {
+    for (let k = 0; body.length > k; k++) {
+      if (mineLocationX === body[i].x && mineLocationY === body[k].y) {
+        appleReset();
+      }
+    }
+  }
+  mines.push({
+    mineLocationX: mineLocationX,
+    mineLocationY: mineLocationY,
+  })
 }
 
 function changeCanvasSize(size) {
