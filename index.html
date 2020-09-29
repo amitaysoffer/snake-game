@@ -13,10 +13,10 @@
 <body>
   <h1 id="header">Snake Game</h1>
   <div class="row">
-    <button class="button btn-border" onclick="toggleBordersActivation()"><i class="fas fa-crop-alt"></i> Activate
-      Sidelines <i class="fas fa-crop-alt"></i></button>
+    <button class="button btn-border" onclick="toggleBordersActivation()"><i class="fas fa-crop-alt"></i> Add
+      Borders <i class="fas fa-crop-alt"></i></button>
 
-    <button class="button btn-mine" onclick="toggleMinesActivation()"><i class="fas fa-bomb"></i> Activate Mines <i
+    <button class="button btn-mine" onclick="toggleMinesActivation()"><i class="fas fa-bomb"></i> Add Mines <i
         class="fas fa-bomb"></i></button>
 
     <a onclick="changeCanvasSize('big')" href="#" id="big" class="size size-big"><i
@@ -32,7 +32,7 @@
   <canvas id="canvas" width="800" height="600"></canvas>
 
   <h2 id="score">Highest Score: <span>0</span> <i class="fas fa-apple-alt"></i></h2>
-  <h2 id="highest-score">Current Score: <span>0</span> <i class="fas fa-apple-alt"></i></h2>
+  <h2 id="highest-score">Score: <span>0</span> <i class="fas fa-apple-alt"></i></h2>
 
   <!-- The Modal -->
   <div id="myModal" class="modal">
@@ -48,6 +48,8 @@
     </div>
   </div>
 
+  <script src="borders.js"></script>
+  <script src="mines.js"></script>
   <script src="script.js"></script>
 </body>
 
