@@ -13,7 +13,7 @@ function toggleBordersActivation() {
   }
 }
 
-function addBorders() {
+function removeBorders() {
   if (body[0].y >= 0 && body[0].y <= canvas.height && body[0].x == -snakeSizeX) {
     // Left side
     addSound('./sounds/borders.mp3');
@@ -36,7 +36,7 @@ function addBorders() {
   }
 }
 
-function removeBorders() {
+function addBorders() {
   if (body[0].y >= snakeSizeY && body[0].y <= canvas.height &&
     body[0].x >= 0 && body[0].x < snakeSizeX) {
     // Left side

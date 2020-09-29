@@ -66,7 +66,7 @@ function gameStart() {
       headCollidesBody();
       headCollidesApple();
       headCollidesMine()
-      isBorders ? removeBorders() : addBorders();
+      isBorders ? addBorders() : removeBorders();
     }
   }, 50);
 }
@@ -207,7 +207,7 @@ function gameOver(location) {
         resetAllSettings()
         gameStart();
         drawEverything();
-        
+
         isGameOn = true
       }
     }
