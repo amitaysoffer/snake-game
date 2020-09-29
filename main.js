@@ -120,10 +120,8 @@ function headCollidesApple() {
     appleReset();
     addTaleToBody();
     addSound('./sounds/apple.mp3');
-
     span[1].innerHTML++
     score++
-
     if (isMines) {
       addMine();
     }
@@ -133,8 +131,8 @@ function headCollidesApple() {
 function headCollidesMine() {
   for (let i = 0; mines.length > i; i++) {
     if (body[0].x === mines[i].mineLocationX && body[0].y === mines[i].mineLocationY) {
+      addSound('./sounds/explosion.mp3');
       gameOver('A Mine!')
-      addSound('./sounds/mines.mp3');
     }
   }
 }
@@ -142,6 +140,7 @@ function headCollidesMine() {
 function headCollidesBody() {
   for (let i = 1; body.length > i; i++) {
     if (body[0].x === body[i].x && body[0].y === body[i].y) {
+      addSound('./sounds/borders.mp3');
       gameOver('Body');
     }
   }
@@ -199,19 +198,18 @@ function gameOver(location) {
   clearInterval(runGame);
   setLocalStorage()
   displayGameOverScreen(location);
-  addSound('./sounds/game-over2.mp3');
+  addSound('./sounds/cheering.mp3');
 
   isGameOn = false;
   document.body.onkeyup = function (e) {
     if (e.which == 32) {
       if (!isGameOn) {
-        mySound.stop();
-
         modal.style.display = "none";
         resetAllSettings()
         gameStart();
         drawEverything();
 
+        mySound.stop();
         isGameOn = true
       }
     }

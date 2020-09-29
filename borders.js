@@ -16,18 +16,22 @@ function toggleBordersActivation() {
 function addBorders() {
   if (body[0].y >= 0 && body[0].y <= canvas.height && body[0].x == -snakeSizeX) {
     // Left side
-    gameOver('Left border');
+    addSound('./sounds/borders.mp3');
+    gameOver('Bottom border');
   }
   else if (body[0].x >= 0 && body[0].x <= canvas.width && body[0].y == -snakeSizeY) {
     // Top side
-    gameOver('Top border');
+    addSound('./sounds/borders.mp3');
+    gameOver('Bottom border');
   } else if (body[0].x == canvas.width && body[0].y >= 0 &&
     body[0].y <= canvas.height) {
     // Right side
-    gameOver('Right border');
+    addSound('./sounds/borders.mp3');
+    gameOver('Bottom border');
   }
   else if (body[0].x >= 0 && body[0].x <= canvas.width && body[0].y == canvas.height) {
     // Bottom side
+    addSound('./sounds/borders.mp3');
     gameOver('Bottom border');
   }
 }
