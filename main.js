@@ -198,7 +198,6 @@ function gameOver(location) {
   clearInterval(runGame);
   setLocalStorage()
   displayGameOverScreen(location);
-  addSound('./sounds/cheering.mp3');
 
   isGameOn = false;
   document.body.onkeyup = function (e) {
@@ -208,8 +207,7 @@ function gameOver(location) {
         resetAllSettings()
         gameStart();
         drawEverything();
-
-        mySound.stop();
+        
         isGameOn = true
       }
     }
