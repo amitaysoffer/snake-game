@@ -1,6 +1,6 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
-
+const span = document.querySelectorAll('span');
 // Snake game settings
 const appleSizeX = 20;
 const appleSizeY = 20;
@@ -25,7 +25,7 @@ let score = 0
 // Local Storage
 let currentHighScore = !localStorage.getItem('highest-score') ? 0 :
   localStorage.getItem('highest-score');
-document.querySelectorAll('span')[0].innerText = currentHighScore
+span[0].innerText = currentHighScore
 // Snake start values
 let body = [
   { x: 60, y: 100 },
@@ -56,28 +56,26 @@ function sound(src) {
   }
 }
 
-appleReset();
-drawEverything();
 function gameStart() {
+  appleReset();
   runGame = setInterval(function () {
     if (isMoveSnakeStart) {
       moveSnakeHead();
+      moveSnakeBody();
+      drawEverything();
+      headCollidesBody();
+      headCollidesApple();
+      headCollidesMine()
+      isBorders ? removeBorders() : addBorders();
     }
-    drawEverything();
   }, 50);
 }
 gameStart();
+drawEverything();
 
 function moveSnakeHead() {
   body[0].x += directionX;
   body[0].y += directionY;
-
-  moveSnakeBody();
-  headCollidesBody();
-  headCollidesApple();
-  headCollidesMine()
-
-  isBorders ? removeBorders() : addBorders();
 }
 
 function moveSnakeBody() {
@@ -121,11 +119,10 @@ function headCollidesApple() {
   if (body[0].x === appleLocationX && body[0].y === appleLocationY) {
     appleReset();
     addTaleToBody();
-    document.querySelectorAll('span')[1].innerHTML++
+    addSound('./sounds/apple.mp3');
+
+    span[1].innerHTML++
     score++
-    // Add sound
-    mySound = new sound('./sounds/apple.mp3');
-    mySound.play();
 
     if (isMines) {
       addMine();
@@ -137,9 +134,7 @@ function headCollidesMine() {
   for (let i = 0; mines.length > i; i++) {
     if (body[0].x === mines[i].mineLocationX && body[0].y === mines[i].mineLocationY) {
       gameOver('A Mine!')
-      // Add sound
-      mySound = new sound('./sounds/mines.mp3');
-      mySound.play();
+      addSound('./sounds/mines.mp3');
     }
   }
 }
@@ -202,17 +197,34 @@ function appleReset() {
 let isGameOn = true;
 function gameOver(location) {
   clearInterval(runGame);
-  const modal = document.getElementById("myModal");
-  modal.style.display = "block";
+  setLocalStorage()
+  displayGameOverScreen(location);
+  addSound('./sounds/game-over2.mp3');
 
-  // Set Local Storage
-  if (currentHighScore < score) {
-    localStorage.setItem('highest-score', score);
-    currentHighScore = localStorage.getItem('highest-score');
-    document.querySelectorAll('span')[0].innerText = currentHighScore
+  isGameOn = false;
+  document.body.onkeyup = function (e) {
+    if (e.which == 32) {
+      if (!isGameOn) {
+        mySound.stop();
+
+        modal.style.display = "none";
+        resetAllSettings()
+        gameStart();
+        drawEverything();
+
+        isGameOn = true
+      }
+    }
   }
+}
 
+const modal = document.getElementById("myModal");
+function displayGameOverScreen(location) {
+  // Block rest of screen
+  modal.style.display = "block";
+  // Append new score details
   const div = document.createElement('div');
+  // Remove old score if exists on display
   if (document.getElementsByClassName('modal-header')[0].childElementCount > 1
   ) {
     document.getElementsByClassName('modal-header')[0].lastElementChild.remove()
@@ -223,56 +235,51 @@ function gameOver(location) {
   <h3>Collision: ${location}</h3>
   `
   document.getElementsByClassName('modal-header')[0].appendChild(div);
+}
 
-  // Add sound
-  mySound = new sound('./sounds/game-over2.mp3');
-  mySound.play();
-
-  isGameOn = false;
-  document.body.onkeyup = function (e) {
-    if (e.which == 32) {
-      if (!isGameOn) {
-        // stop sound
-        mySound.stop();
-
-        isGameOn = true
-
-        isMoveUp = false
-        isMoveDown = false
-        isMoveRight = false
-        isMoveLeft = false
-
-        modal.style.display = "none";
-        body = [
-          { x: 60, y: 100 },
-          { x: 40, y: 100 },
-          { x: 20, y: 100 },
-          { x: 0, y: 100 }
-        ]
-        bodyCopy = [
-          { x: 60, y: 100 },
-          { x: 40, y: 100 },
-          { x: 20, y: 100 },
-          { x: 0, y: 100 }
-        ]
-        directionX = 20;
-        directionY = 0;
-
-        mines = []
-        score = 0;
-        isMoveSnakeStart = false
-        document.querySelectorAll('span')[1].innerHTML = '0'
-
-        isMoveUp = true
-        isMoveDown = true
-        isMoveRight = false
-        isMoveLeft = false
-
-        gameStart();
-        appleReset();
-      }
-    }
+function setLocalStorage() {
+  if (currentHighScore < score) {
+    localStorage.setItem('highest-score', score);
+    currentHighScore = localStorage.getItem('highest-score');
+    span[0].innerText = currentHighScore
   }
+}
+
+function addSound(newSound) {
+  mySound = new sound(newSound);
+  mySound.play();
+}
+
+function resetAllSettings() {
+  isMoveUp = false
+  isMoveDown = false
+  isMoveRight = false
+  isMoveLeft = false
+
+  body = [
+    { x: 60, y: 100 },
+    { x: 40, y: 100 },
+    { x: 20, y: 100 },
+    { x: 0, y: 100 }
+  ]
+  bodyCopy = [
+    { x: 60, y: 100 },
+    { x: 40, y: 100 },
+    { x: 20, y: 100 },
+    { x: 0, y: 100 }
+  ]
+  directionX = 20;
+  directionY = 0;
+
+  mines = []
+  score = 0;
+  isMoveSnakeStart = false
+  span[1].innerHTML = '0'
+
+  isMoveUp = true
+  isMoveDown = true
+  isMoveRight = false
+  isMoveLeft = false
 }
 
 function changeCanvasSize(size) {
@@ -284,29 +291,24 @@ function changeCanvasSize(size) {
   if (size === 'big') {
     canvas.width = 1100
     canvas.height = 700
-    sizeElement.classList.add('red-color');
     document.body.style.width = '1100px'
-    appleReset();
   } else if (size === 'medium') {
     canvas.width = 800
     canvas.height = 600
-    sizeElement.classList.add('red-color');
     document.body.style.width = '800px'
-    appleReset();
   } else if (size === 'small') {
     canvas.width = 600
     canvas.height = 400
-    sizeElement.classList.add('red-color');
     document.body.style.width = '600px'
-    appleReset();
   } else if (size === 'petite') {
     canvas.width = 300
     canvas.height = 500
-    sizeElement.classList.add('red-color');
     document.body.style.width = '400px'
     document.getElementsByClassName('row')[0].classList.add('flex-flow');
-    appleReset();
   }
+  sizeElement.classList.add('red-color');
+  appleReset();
+  drawEverything();
 }
 
 // Control Snake with arrows

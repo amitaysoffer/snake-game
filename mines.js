@@ -1,5 +1,5 @@
 let mines = [];
-// Activate/Deactivate mines button
+
 let isMines = false;
 function toggleMinesActivation() {
   if (!isMines) {
@@ -22,7 +22,7 @@ function addMine() {
   // Verify mine doesn't render out of canvas
   mineLocationX = mineLocationX > 780 ? 780 : mineLocationX
   mineLocationY = mineLocationY > 580 ? 580 : mineLocationY
-
+  
   // Verify is in the grid system
   while (mineLocationY / 20 % 1) {
     mineLocationY = mineLocationY + 1
@@ -30,7 +30,6 @@ function addMine() {
   while (mineLocationX / 20 % 1) {
     mineLocationX = mineLocationX + 1
   }
-
   // Verify mine doesn't render on the snake
   for (let i = 0; body.length > i; i++) {
     for (let k = 0; body.length > k; k++) {
