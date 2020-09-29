@@ -172,8 +172,8 @@ function appleReset() {
   appleLocationY = Math.floor((Math.random() * canvas.height) + 1);
 
   // Verify apple doesn't render out of canvas
-  appleLocationX = appleLocationX > 780 ? 780 : appleLocationX
-  appleLocationY = appleLocationY > 580 ? 580 : appleLocationY
+  appleLocationX = appleLocationX > canvas.width - snakeSizeX ? canvas.width - snakeSizeX : appleLocationX
+  appleLocationY = appleLocationY > canvas.height - snakeSizeY ? canvas.height - snakeSizeY : appleLocationY
 
   // Verify is in the grid system
   while (appleLocationY / 20 % 1) {

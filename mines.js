@@ -20,9 +20,9 @@ function addMine() {
   mineLocationY = Math.floor((Math.random() * canvas.height) + 1);
 
   // Verify mine doesn't render out of canvas
-  mineLocationX = mineLocationX > 780 ? 780 : mineLocationX
-  mineLocationY = mineLocationY > 580 ? 580 : mineLocationY
-  
+  mineLocationX = mineLocationX > canvas.width - snakeSizeX ? canvas.width - snakeSizeX : mineLocationX
+  mineLocationY = mineLocationY > canvas.height - snakeSizeY ? canvas.height - snakeSizeY : mineLocationY
+
   // Verify is in the grid system
   while (mineLocationY / 20 % 1) {
     mineLocationY = mineLocationY + 1
