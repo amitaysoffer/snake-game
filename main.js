@@ -218,9 +218,9 @@ function gameOver(location) {
     document.getElementsByClassName('modal-header')[0].lastElementChild.remove()
   }
   div.innerHTML = `
-    <h3>Place of collision: ${location}</h3>
-    <h3>Apples collected: ${score}</h3>
-    <h3>Highest score: ${currentHighScore}</h3>
+  <h3>Apples collected: ${score}</h3>
+  <h3>Highest score: ${currentHighScore}</h3>
+  <h3>Collision: ${location}</h3>
   `
   document.getElementsByClassName('modal-header')[0].appendChild(div);
 
