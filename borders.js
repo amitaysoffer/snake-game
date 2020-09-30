@@ -13,7 +13,7 @@ function toggleBordersActivation() {
   }
 }
 
-function removeBorders() {
+function headCollidesBorder() {
   if (body[0].y >= 0 && body[0].y <= canvas.height && body[0].x == -snakeSizeX) {
     // Left side
     addSound('./sounds/borders.mp3');

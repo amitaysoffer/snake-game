@@ -66,7 +66,7 @@ function gameStart() {
       headCollidesBody();
       headCollidesApple();
       headCollidesMine()
-      isBorders ? addBorders() : removeBorders();
+      isBorders ? addBorders() : headCollidesBorder();
     }
   }, 50);
 }
