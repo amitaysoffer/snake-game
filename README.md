@@ -6,6 +6,8 @@ Click [HERE](https://amitaysoffer.github.io/snake-game/) to start playing the ga
 
 ![Screenshot 2020-10-23 at 19 02 32](https://user-images.githubusercontent.com/31068256/97038230-60cda400-1562-11eb-9450-5abd04249b82.png)
 
+![Screenshot 2020-10-23 at 19 26 50](https://user-images.githubusercontent.com/31068256/97040445-d7b86c00-1565-11eb-9a21-c37e66bbdd01.png)
+
 ## Summary
 This version of the classic snake game helps you adjust your level to the game and not vice versa. You can add borders, mines and even adjust the size of the game to your monitor.
 
