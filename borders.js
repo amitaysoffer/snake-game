@@ -41,38 +41,18 @@ function addBorders() {
     body[0].x >= 0 && body[0].x < snakeSizeX) {
     // Left side
     direction = DIRECTION_UP
-
-    isMoveRight = true;
-    isMoveLeft = false;
-    isMoveUp = false;
-    isMoveDown = false;
   }
   else if (body[0].x >= 0 && body[0].x < canvas.width - snakeSizeX
     && body[0].y >= 0 && body[0].y < snakeSizeY) {
-    // Top side
+    // Top side   
     direction = DIRECTION_RIGHT
-
-    isMoveRight = false;
-    isMoveLeft = false;
-    isMoveUp = false;
-    isMoveDown = true;
   } else if (body[0].x >= canvas.width - snakeSizeX && body[0].y >= 0 && body[0].y < canvas.height - snakeSizeY) {
     // Right side
     direction = DIRECTION_DOWN
-
-    isMoveRight = false;
-    isMoveLeft = true;
-    isMoveUp = false;
-    isMoveDown = false;
   }
   else if (body[0].x <= canvas.width - snakeSizeX && body[0].x >= 0
     && body[0].y >= canvas.height - snakeSizeY && body[0].y <= canvas.height) {
     // Bottom side
     direction = DIRECTION_LEFT
-
-    isMoveRight = false;
-    isMoveLeft = false;
-    isMoveUp = true;
-    isMoveDown = false;
   }
 }

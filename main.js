@@ -12,11 +12,6 @@ let mineLocationX;
 let mineLocationY;
 // Push arrow to start game
 let isMoveSnakeStart = false
-// Control arrows
-let isMoveUp = true
-let isMoveDown = true
-let isMoveRight = false
-let isMoveLeft = false
 // Snake directions
 const DIRECTION_RIGHT = "RIGHT"
 const DIRECTION_LEFT = "LEFT"
@@ -71,10 +66,12 @@ function gameStart() {
       headCollidesMine()
       isBorders ? addBorders() : headCollidesBorder();
     }
-  }, 50);
+  }, 70);
 }
 gameStart();
 drawEverything();
+
+
 
 function moveSnakeHead() {
   switch (direction) {
@@ -264,11 +261,6 @@ function addSound(newSound) {
 }
 
 function resetAllSettings() {
-  isMoveUp = false
-  isMoveDown = false
-  isMoveRight = false
-  isMoveLeft = false
-
   body = [
     { x: 60, y: 100 },
     { x: 40, y: 100 },
@@ -288,11 +280,6 @@ function resetAllSettings() {
   score = 0;
   isMoveSnakeStart = false
   span[1].innerHTML = '0'
-
-  isMoveUp = true
-  isMoveDown = true
-  isMoveRight = false
-  isMoveLeft = false
 }
 
 function changeCanvasSize(size) {
@@ -326,20 +313,12 @@ document.addEventListener("keydown", function (e) {
     if (direction !== DIRECTION_LEFT) {
       direction = DIRECTION_RIGHT
     }
-    isMoveRight = false;
-    isMoveLeft = false;
-    isMoveUp = true;
-    isMoveDown = true;
     isMoveSnakeStart = true
   }
   if (e.which === 37) {
     if (direction !== DIRECTION_RIGHT) {
       direction = DIRECTION_LEFT
     }
-    isMoveRight = false;
-    isMoveLeft = false;
-    isMoveUp = true;
-    isMoveDown = true;
     isMoveSnakeStart = true
   }
   if (e.which === 38) {
@@ -347,19 +326,11 @@ document.addEventListener("keydown", function (e) {
       direction = DIRECTION_UP
     }
     isMoveSnakeStart = true
-    isMoveRight = true;
-    isMoveLeft = true;
-    isMoveUp = false;
-    isMoveDown = false;
   }
   if (e.which === 40) {
     if (direction !== DIRECTION_UP) {
       direction = DIRECTION_DOWN
     }
     isMoveSnakeStart = true
-    isMoveRight = true;
-    isMoveLeft = true;
-    isMoveUp = false;
-    isMoveDown = false;
   }
 })
