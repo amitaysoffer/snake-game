@@ -8,6 +8,33 @@ body {
   text-align: center;
   margin: auto;
   width: 800px;
+  background-image: url('https://png.pngtree.com/thumb_back/fw800/back_our/20190620/ourmid/pngtree-simple-cartoon-style-jungle-adventure-image_167189.jpg');
+  background-position: center;
+  background-size: cover;
+}
+
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+h1 {
+  width: 400px;
+  color: #333;
+  font-size: 50px;
+  margin: 30px 10px;
+  box-shadow: 2px 2px 6px #888;
+  letter-spacing: -1px;
+  background-color: #fff;
+  border: 3px ridge #333;
+  border-radius: 15px;
+  color: #008000;
+}
+
+.snake {
+  width: 100;
+  height: 100;
 }
 
 .btn-border, 
@@ -80,18 +107,6 @@ body {
 
 .red-color {
   color: red;
-}
-
-h1 {
-  width: 400px;
-  color: #333;
-  font-size: 50px;
-  margin: 10px auto;
-  box-shadow: 2px 2px 6px #888;
-  letter-spacing: -1px;
-  background-color: #fff;
-  border: 3px ridge #333;
-  border-radius: 15px;
 }
 
 h2 {
