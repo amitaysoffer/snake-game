@@ -17,17 +17,17 @@ function headCollidesBorder() {
   if (body[0].y >= 0 && body[0].y <= canvas.height && body[0].x == -snakeSizeX) {
     // Left side
     addSound('./sounds/borders.mp3');
-    gameOver('Bottom border');
+    gameOver('Left border');
   }
   else if (body[0].x >= 0 && body[0].x <= canvas.width && body[0].y == -snakeSizeY) {
     // Top side
     addSound('./sounds/borders.mp3');
-    gameOver('Bottom border');
+    gameOver('Top border');
   } else if (body[0].x == canvas.width && body[0].y >= 0 &&
     body[0].y <= canvas.height) {
     // Right side
     addSound('./sounds/borders.mp3');
-    gameOver('Bottom border');
+    gameOver('Right border');
   }
   else if (body[0].x >= 0 && body[0].x <= canvas.width && body[0].y == canvas.height) {
     // Bottom side
@@ -40,10 +40,8 @@ function addBorders() {
   if (body[0].y >= snakeSizeY && body[0].y <= canvas.height &&
     body[0].x >= 0 && body[0].x < snakeSizeX) {
     // Left side
-    if (isMoveUp) {
-      directionX = 0;
-      directionY = -20;
-    }
+    direction = DIRECTION_UP
+
     isMoveRight = true;
     isMoveLeft = false;
     isMoveUp = false;
@@ -52,20 +50,16 @@ function addBorders() {
   else if (body[0].x >= 0 && body[0].x < canvas.width - snakeSizeX
     && body[0].y >= 0 && body[0].y < snakeSizeY) {
     // Top side
-    if (isMoveRight) {
-      directionX = 20;
-      directionY = 0;
-    }
+    direction = DIRECTION_RIGHT
+
     isMoveRight = false;
     isMoveLeft = false;
     isMoveUp = false;
     isMoveDown = true;
   } else if (body[0].x >= canvas.width - snakeSizeX && body[0].y >= 0 && body[0].y < canvas.height - snakeSizeY) {
     // Right side
-    if (isMoveDown) {
-      directionX = 0;
-      directionY = 20;
-    }
+    direction = DIRECTION_DOWN
+
     isMoveRight = false;
     isMoveLeft = true;
     isMoveUp = false;
@@ -74,10 +68,8 @@ function addBorders() {
   else if (body[0].x <= canvas.width - snakeSizeX && body[0].x >= 0
     && body[0].y >= canvas.height - snakeSizeY && body[0].y <= canvas.height) {
     // Bottom side
-    if (isMoveLeft) {
-      directionX = -20;
-      directionY = 0;
-    }
+    direction = DIRECTION_LEFT
+
     isMoveRight = false;
     isMoveLeft = false;
     isMoveUp = true;

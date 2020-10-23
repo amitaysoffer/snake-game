@@ -18,8 +18,11 @@ let isMoveDown = true
 let isMoveRight = false
 let isMoveLeft = false
 // Snake directions
-let directionX = 20;
-let directionY = 0;
+const DIRECTION_RIGHT = "RIGHT"
+const DIRECTION_LEFT = "LEFT"
+const DIRECTION_UP = "UP"
+const DIRECTION_DOWN = "DOWN"
+let direction = DIRECTION_RIGHT
 // Current Score
 let score = 0
 // Local Storage
@@ -74,8 +77,22 @@ gameStart();
 drawEverything();
 
 function moveSnakeHead() {
-  body[0].x += directionX;
-  body[0].y += directionY;
+  switch (direction) {
+    case DIRECTION_RIGHT:
+      body[0].x += 20
+      break;
+    case DIRECTION_LEFT:
+      body[0].x -= 20
+      break;
+    case DIRECTION_UP:
+      body[0].y -= 20
+      break;
+    case DIRECTION_DOWN:
+      body[0].y += 20
+      break;
+    default:
+      break;
+  }
 }
 
 function moveSnakeBody() {
@@ -264,8 +281,8 @@ function resetAllSettings() {
     { x: 20, y: 100 },
     { x: 0, y: 100 }
   ]
-  directionX = 20;
-  directionY = 0;
+
+  direction = DIRECTION_RIGHT
 
   mines = []
   score = 0;
@@ -310,9 +327,8 @@ function changeCanvasSize(size) {
 // Control Snake with arrows
 document.addEventListener("keydown", function (e) {
   if (e.which === 39) {
-    if (isMoveRight) {
-      directionX = 20;
-      directionY = 0;
+    if (direction !== DIRECTION_LEFT) {
+      direction = DIRECTION_RIGHT
     }
     isMoveRight = false;
     isMoveLeft = false;
@@ -321,9 +337,8 @@ document.addEventListener("keydown", function (e) {
     isMoveSnakeStart = true
   }
   if (e.which === 37) {
-    if (isMoveLeft) {
-      directionX = -20;
-      directionY = 0;
+    if (direction !== DIRECTION_RIGHT) {
+      direction = DIRECTION_LEFT
     }
     isMoveRight = false;
     isMoveLeft = false;
@@ -332,9 +347,8 @@ document.addEventListener("keydown", function (e) {
     isMoveSnakeStart = true
   }
   if (e.which === 38) {
-    if (isMoveUp) {
-      directionX = 0;
-      directionY = -20;
+    if (direction !== DIRECTION_DOWN) {
+      direction = DIRECTION_UP
     }
     isMoveSnakeStart = true
     isMoveRight = true;
@@ -343,9 +357,8 @@ document.addEventListener("keydown", function (e) {
     isMoveDown = false;
   }
   if (e.which === 40) {
-    if (isMoveDown) {
-      directionX = 0;
-      directionY = 20;
+    if (direction !== DIRECTION_UP) {
+      direction = DIRECTION_DOWN
     }
     isMoveSnakeStart = true
     isMoveRight = true;
