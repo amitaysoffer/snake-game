@@ -1,12 +1,12 @@
 let isBorders = false;
 function toggleBordersActivation() {
   if (!isBorders) {
-    document.getElementById('canvas').style.border = '15px solid blue';
+    document.getElementById('canvas').classList.add('gameBorder');
     document.getElementsByClassName('btn-border')[0].innerHTML = `<i class='fas fa-crop-alt'></i> Remove Borders <i class='fas fa-crop-alt'></i>`
     document.getElementsByClassName('btn-border')[0].classList.add('blue-border')
     isBorders = true
   } else {
-    document.getElementById('canvas').style.border = 'none';
+    document.getElementById('canvas').classList.remove('gameBorder');
     document.getElementsByClassName('btn-border')[0].innerHTML = `<i class='fas fa-crop-alt'></i> Add Borders <i class="fas fa-crop-alt"></i>`
     document.getElementsByClassName('btn-border')[0].classList.remove('blue-border')
     isBorders = false

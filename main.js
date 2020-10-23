@@ -297,15 +297,11 @@ function resetAllSettings() {
 
 function changeCanvasSize(size) {
   const sizeElement = document.getElementById(size);
-  for (let i = 0; 4 > i; i++) {
+  for (let i = 0; 3 > i; i++) {
     document.getElementsByClassName('size')[i].classList.remove('red-color');
   }
   document.getElementsByClassName('row')[0].classList.remove('flex-flow');
-  if (size === 'big') {
-    canvas.width = 1100
-    canvas.height = 700
-    document.body.style.width = '1100px'
-  } else if (size === 'medium') {
+  if (size === 'medium') {
     canvas.width = 800
     canvas.height = 600
     document.body.style.width = '800px'

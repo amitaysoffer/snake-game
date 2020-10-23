@@ -13,6 +13,11 @@ body {
   background-size: cover;
 }
 
+.gameBorder {
+  border: 15px solid #385a7c; 
+  border-radius: 20px;
+}
+
 header {
   display: flex;
   justify-content: center;
@@ -102,11 +107,11 @@ h1 {
 }
 
 .size:hover {
-  color: red;
+  color: #ff2b2b;
 }
 
 .red-color {
-  color: red;
+  color: #ff2b2b;
 }
 
 h2 {
@@ -139,7 +144,7 @@ h3 {
 }
 
 .blue-border {
-  border: 5px solid blue;
+  border: 5px solid #ff2b2b;
 }
 
 /* The Modal (background) */
@@ -169,7 +174,7 @@ h3 {
 /* Modal Footer */
 .modal-footer {
   padding: 10px 16px;
-  background-color: cornflowerblue;
+  background-color: #ff2b2b;
   color: white;
   font-size: 25px;
   border-bottom-left-radius: 60px;
