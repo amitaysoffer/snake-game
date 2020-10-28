@@ -12,6 +12,11 @@ let mineLocationX;
 let mineLocationY;
 // Push arrow to start game
 let isMoveSnakeStart = false
+// Control arrows	
+let isMoveUp = true
+let isMoveDown = true
+let isMoveRight = false
+let isMoveLeft = false
 // Snake directions
 const DIRECTION_RIGHT = "RIGHT"
 const DIRECTION_LEFT = "LEFT"
@@ -261,6 +266,11 @@ function addSound(newSound) {
 }
 
 function resetAllSettings() {
+  isMoveUp = false
+  isMoveDown = false
+  isMoveRight = false
+  isMoveLeft = false
+
   body = [
     { x: 60, y: 100 },
     { x: 40, y: 100 },
@@ -280,6 +290,11 @@ function resetAllSettings() {
   score = 0;
   isMoveSnakeStart = false
   span[1].innerHTML = '0'
+
+  isMoveUp = true
+  isMoveDown = true
+  isMoveRight = false
+  isMoveLeft = false
 }
 
 function changeCanvasSize(size) {
@@ -310,27 +325,43 @@ function changeCanvasSize(size) {
 // Control Snake with arrows
 document.addEventListener("keydown", function (e) {
   if (e.which === 39) {
-    if (direction !== DIRECTION_LEFT) {
+    if (direction !== DIRECTION_LEFT && isMoveRight) {
       direction = DIRECTION_RIGHT
     }
     isMoveSnakeStart = true
+    isMoveUp = true
+    isMoveDown = true
+    isMoveRight = false
+    isMoveLeft = false
   }
   if (e.which === 37) {
-    if (direction !== DIRECTION_RIGHT) {
+    if (direction !== DIRECTION_RIGHT && isMoveLeft) {
       direction = DIRECTION_LEFT
     }
     isMoveSnakeStart = true
+    isMoveUp = true
+    isMoveDown = true
+    isMoveRight = false
+    isMoveLeft = false
   }
   if (e.which === 38) {
-    if (direction !== DIRECTION_DOWN) {
+    if (direction !== DIRECTION_DOWN && isMoveUp) {
       direction = DIRECTION_UP
     }
     isMoveSnakeStart = true
+    isMoveUp = false
+    isMoveDown = false
+    isMoveRight = true
+    isMoveLeft = true
   }
   if (e.which === 40) {
-    if (direction !== DIRECTION_UP) {
+    if (direction !== DIRECTION_UP && isMoveDown) {
       direction = DIRECTION_DOWN
     }
     isMoveSnakeStart = true
+    isMoveUp = false
+    isMoveDown = false
+    isMoveRight = true
+    isMoveLeft = true
   }
 })

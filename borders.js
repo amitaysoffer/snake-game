@@ -41,18 +41,34 @@ function addBorders() {
     body[0].x >= 0 && body[0].x < snakeSizeX) {
     // Left side
     direction = DIRECTION_UP
+    isMoveUp = false
+    isMoveDown = false
+    isMoveRight = true
+    isMoveLeft = false
   }
   else if (body[0].x >= 0 && body[0].x < canvas.width - snakeSizeX
     && body[0].y >= 0 && body[0].y < snakeSizeY) {
     // Top side   
     direction = DIRECTION_RIGHT
+    isMoveUp = false
+    isMoveDown = true
+    isMoveRight = false
+    isMoveLeft = false
   } else if (body[0].x >= canvas.width - snakeSizeX && body[0].y >= 0 && body[0].y < canvas.height - snakeSizeY) {
     // Right side
     direction = DIRECTION_DOWN
+    isMoveUp = false
+    isMoveDown = false
+    isMoveRight = false
+    isMoveLeft = true
   }
   else if (body[0].x <= canvas.width - snakeSizeX && body[0].x >= 0
     && body[0].y >= canvas.height - snakeSizeY && body[0].y <= canvas.height) {
     // Bottom side
     direction = DIRECTION_LEFT
+    isMoveUp = true
+    isMoveDown = false
+    isMoveRight = false
+    isMoveLeft = false
   }
 }
