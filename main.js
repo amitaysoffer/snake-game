@@ -12,11 +12,6 @@ let mineLocationX;
 let mineLocationY;
 // Push arrow to start game
 let isMoveSnakeStart = false
-// Control arrows	
-let isMoveUp = true
-let isMoveDown = true
-let isMoveRight = false
-let isMoveLeft = false
 // Snake directions
 const DIRECTION_RIGHT = "RIGHT"
 const DIRECTION_LEFT = "LEFT"
@@ -266,11 +261,6 @@ function addSound(newSound) {
 }
 
 function resetAllSettings() {
-  isMoveUp = false
-  isMoveDown = false
-  isMoveRight = false
-  isMoveLeft = false
-
   body = [
     { x: 60, y: 100 },
     { x: 40, y: 100 },
@@ -290,11 +280,6 @@ function resetAllSettings() {
   score = 0;
   isMoveSnakeStart = false
   span[1].innerHTML = '0'
-
-  isMoveUp = true
-  isMoveDown = true
-  isMoveRight = false
-  isMoveLeft = false
 }
 
 function changeCanvasSize(size) {
@@ -324,44 +309,37 @@ function changeCanvasSize(size) {
 
 // Control Snake with arrows
 document.addEventListener("keydown", function (e) {
+  // RIGHT
   if (e.which === 39) {
-    if (direction !== DIRECTION_LEFT && isMoveRight) {
+    const isHeadAtRight = body[0].x === 780 && isBorders
+    if (direction !== DIRECTION_LEFT && !isHeadAtRight) {
       direction = DIRECTION_RIGHT
     }
     isMoveSnakeStart = true
-    isMoveUp = true
-    isMoveDown = true
-    isMoveRight = false
-    isMoveLeft = false
   }
+  // LEFT
   if (e.which === 37) {
-    if (direction !== DIRECTION_RIGHT && isMoveLeft) {
+    const isHeadAtLeft = body[0].x === 0 && isBorders
+    if (direction !== DIRECTION_RIGHT && !isHeadAtLeft) {
       direction = DIRECTION_LEFT
     }
     isMoveSnakeStart = true
-    isMoveUp = true
-    isMoveDown = true
-    isMoveRight = false
-    isMoveLeft = false
   }
+  // UP
   if (e.which === 38) {
-    if (direction !== DIRECTION_DOWN && isMoveUp) {
+    // const isBordersAndRidingTopRail = isBorders && body[0].y === 0;
+    const isHeadAtTop = body[0].y === 0 && isBorders
+    if (direction !== DIRECTION_DOWN && !isHeadAtTop) {
       direction = DIRECTION_UP
     }
     isMoveSnakeStart = true
-    isMoveUp = false
-    isMoveDown = false
-    isMoveRight = true
-    isMoveLeft = true
   }
+  // DOWN
   if (e.which === 40) {
-    if (direction !== DIRECTION_UP && isMoveDown) {
+    const isHeadAtBottom = body[0].y === 580 && isBorders
+    if (direction !== DIRECTION_UP && !isHeadAtBottom) {
       direction = DIRECTION_DOWN
     }
     isMoveSnakeStart = true
-    isMoveUp = false
-    isMoveDown = false
-    isMoveRight = true
-    isMoveLeft = true
   }
 })
