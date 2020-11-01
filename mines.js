@@ -1,6 +1,6 @@
 let mines = [];
-
 let isMines = false;
+
 function toggleMinesActivation() {
   if (!isMines) {
     document.getElementsByClassName('btn-mine')[0].innerHTML = `<i
@@ -43,3 +43,9 @@ function addMine() {
     mineLocationY: mineLocationY,
   })
 }
+
+document.addEventListener("keydown", function (e) {
+  if (e.which === 77) {
+    toggleMinesActivation()
+  }
+})

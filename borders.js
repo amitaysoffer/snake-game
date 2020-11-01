@@ -1,4 +1,5 @@
 let isBorders = false;
+
 function toggleBordersActivation() {
   if (!isBorders) {
     document.getElementById('canvas').classList.add('gameBorder');
@@ -42,7 +43,7 @@ function addBorders() {
     body[0].x >= 0 && body[0].x < snakeSizeX) {
     direction = DIRECTION_UP
   }
-    // UP
+  // UP
   else if (body[0].x >= 0 && body[0].x < canvas.width - snakeSizeX
     && body[0].y >= 0 && body[0].y < snakeSizeY) {
     direction = DIRECTION_RIGHT
@@ -55,3 +56,9 @@ function addBorders() {
     direction = DIRECTION_LEFT
   }
 }
+
+document.addEventListener("keydown", function (e) {
+  if (e.which === 66) {
+    toggleBordersActivation()
+  }
+})
