@@ -327,7 +327,6 @@ document.addEventListener("keydown", function (e) {
   }
   // UP
   if (e.which === 38) {
-    // const isBordersAndRidingTopRail = isBorders && body[0].y === 0;
     const isHeadAtTop = body[0].y === 0 && isBorders
     if (direction !== DIRECTION_DOWN && !isHeadAtTop) {
       direction = DIRECTION_UP
