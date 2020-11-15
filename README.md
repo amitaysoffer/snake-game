@@ -1,12 +1,13 @@
 # Snake Game with Multiple Features
 
-*A new version of the classic Snake game with cool new  features, sounds and LS setup.*
+> A new version of the classic Snake game with cool new  features, sounds and LS setup.
 
-Click [HERE](https://amitaysoffer.github.io/snake-game/) to start playing the game.
+<img src="https://img.icons8.com/color/480/000000/javascript.png" width="100"/><img src="https://img.icons8.com/color/480/000000/css3.png" width="100"/><img src="https://img.icons8.com/color/480/000000/html-5.png" width="100"/>
 
-![Screenshot 2020-10-23 at 19 02 32](https://user-images.githubusercontent.com/31068256/97038230-60cda400-1562-11eb-9450-5abd04249b82.png)
+Click [HERE](https://amitaysoffer.github.io/snake-game/) to play the game.
 
-![Screenshot 2020-10-23 at 19 26 50](https://user-images.githubusercontent.com/31068256/97040445-d7b86c00-1565-11eb-9a21-c37e66bbdd01.png)
+<img src="https://user-images.githubusercontent.com/31068256/99194582-2974a080-2778-11eb-89be-d88dab1a8e16.png" width="250" ><img src="https://user-images.githubusercontent.com/31068256/99194591-4315e800-2778-11eb-9c29-4d8c8f3855b6.png" width="250" ><img src="https://user-images.githubusercontent.com/31068256/99194598-4ad58c80-2778-11eb-9f65-e22ae9bb1c9e.png" width="250" >
+
 
 ## Summary
 This version of the classic snake game helps you adjust your level to the game and not vice versa. You can add borders, mines and even adjust the size of the game to your monitor.
