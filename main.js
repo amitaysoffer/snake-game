@@ -54,33 +54,7 @@ function sound(src) {
   }
 }
 
-// let speed = {
-//   low: 125,
-//   medium: 75,
-//   high: 50
-// }
-let speed = 125
-
-document.querySelectorAll('.btn-speed').forEach(btn => {
-  btn.addEventListener('click', function (e) {
-    // debugger
-    console.log('speed event')
-    if (e.target.id === 'turtle') {
-      speed = 300
-    } else if (e.target.id === 'rabit') {
-      speed = 200
-    } else {
-      speed = 100
-    }
-    // console.log(e.target.id)
-    console.log(speed)
-    gameStart(speed)
-    drawEverything();
-  })
-  // debugger
-})
-
-function gameStart(speed) {
+function gameStart() {
   appleReset();
   runGame = setInterval(function () {
     if (isMoveSnakeStart) {
@@ -92,9 +66,10 @@ function gameStart(speed) {
       headCollidesMine()
       isBorders ? addBorders() : headCollidesBorder();
     }
-  }, speed);
+  }, 70);
 }
-// gameStart();
+gameStart();
+drawEverything();
 
 function moveSnakeHead() {
   switch (direction) {
@@ -358,8 +333,8 @@ document.addEventListener("keydown", function (e) {
   }
   // DOWN
   if (e.which === 40) {
-    const isHeadAtBottomBorder = body[0].y === 580 && isBorders
-    if (direction !== DIRECTION_UP && !isHeadAtBottomBorder) {
+    const isHeadAtBottom = body[0].y === 580 && isBorders
+    if (direction !== DIRECTION_UP && !isHeadAtBottom) {
       direction = DIRECTION_DOWN
     }
     isMoveSnakeStart = true

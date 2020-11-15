@@ -19,18 +19,14 @@
   <div class="feature-box">
     <button class="button btn-border" onclick="toggleBordersActivation()"><i class="fas fa-crop-alt"></i> Add Borders <i class="fas fa-crop-alt"></i></button>
     <button class="button btn-mine" onclick="toggleMinesActivation()"><i class="fas fa-bomb"></i> Add Mines <i class="fas fa-bomb"></i></button>
-    <!-- Speed -->
-    <button class="button btn-speed" id="turtle"><i class="fa fa-speed"></i> Turtle </button>
-    <button class="button btn-speed" id="rabit"><i class="fa fa-speed"></i> rabit </button>
-    <button class="button btn-speed" id="panter"><i class="fa fa-speed"></i> panter </button>
+    <a onclick="changeCanvasSize('medium')" href="#" id="medium" class="size size-medium red-color"><i class="fas fa-desktop fa-4x"></i></a>
+    <a onclick="changeCanvasSize('small')" href="#" id="small" class="size size-small"><i class="fas fa-tablet-alt fa-4x"></i></a>
+    <a onclick="changeCanvasSize('petite')" href="#" id="petite" class="size size-small"><i class="fas fa-mobile-alt fa-4x"></i></a>
   </div>
   <!-- Canvas/Game -->
   <canvas id="canvas" width="800" height="600"></canvas>
   <!-- Scores -->
   <div class="score-box row">
-    <a onclick="changeCanvasSize('medium')" href="#" id="medium" class="size size-medium red-color"><i class="fas fa-desktop fa-4x"></i></a>
-    <a onclick="changeCanvasSize('small')" href="#" id="small" class="size size-small"><i class="fas fa-tablet-alt fa-4x"></i></a>
-    <a onclick="changeCanvasSize('petite')" href="#" id="petite" class="size size-small"><i class="fas fa-mobile-alt fa-4x"></i></a>
     <h2 id="score">Highest Score: <span>0</span> <i class="fas fa-apple-alt"></i></h2>
     <h2 id="highest-score">Score: <span>0</span> <i class="fas fa-apple-alt"></i></h2>
   </div>
