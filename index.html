@@ -3,37 +3,40 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
-    integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
-    crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
   <link rel="stylesheet" href="style.css">
   <title>Snake Game</title>
 </head>
 
 <body>
+  <!-- Header -->
   <header>
     <img src="./images/snake2.png" class="snake-right snake" alt="snake1">
     <h1 id="header">Snake Game</h1>
     <img src="./images/snake1.png" class="snake-left snake" alt="snake2">
   </header>
-  <div class="row">
-    <button class="button btn-border" onclick="toggleBordersActivation()"><i class="fas fa-crop-alt"></i> Add Borders <i
-        class="fas fa-crop-alt"></i></button>
-    <button class="button btn-mine" onclick="toggleMinesActivation()"><i class="fas fa-bomb"></i> Add Mines <i
-        class="fas fa-bomb"></i></button>
-    <a onclick="changeCanvasSize('medium')" href="#" id="medium" class="size size-medium red-color"><i
-        class="fas fa-desktop fa-4x"></i></a>
-    <a onclick="changeCanvasSize('small')" href="#" id="small" class="size size-small"><i
-        class="fas fa-tablet-alt fa-4x"></i></a>
-    <a onclick="changeCanvasSize('petite')" href="#" id="petite" class="size size-small"><i
-        class="fas fa-mobile-alt fa-4x"></i></a>
+  <!-- Features Row -->
+  <div class="feature-box">
+    <button class="button btn-border" onclick="toggleBordersActivation()"><i class="fas fa-crop-alt"></i> Add Borders <i class="fas fa-crop-alt"></i></button>
+    <button class="button btn-mine" onclick="toggleMinesActivation()"><i class="fas fa-bomb"></i> Add Mines <i class="fas fa-bomb"></i></button>
+    <!-- Speed -->
+    <button class="button btn-speed" id="turtle"><i class="fa fa-speed"></i> Turtle </button>
+    <button class="button btn-speed" id="rabit"><i class="fa fa-speed"></i> rabit </button>
+    <button class="button btn-speed" id="panter"><i class="fa fa-speed"></i> panter </button>
   </div>
+  <!-- Canvas/Game -->
   <canvas id="canvas" width="800" height="600"></canvas>
-  <h2 id="score">Highest Score: <span>0</span> <i class="fas fa-apple-alt"></i></h2>
-  <h2 id="highest-score">Score: <span>0</span> <i class="fas fa-apple-alt"></i></h2>
-  <!-- The Modal -->
+  <!-- Scores -->
+  <div class="score-box row">
+    <a onclick="changeCanvasSize('medium')" href="#" id="medium" class="size size-medium red-color"><i class="fas fa-desktop fa-4x"></i></a>
+    <a onclick="changeCanvasSize('small')" href="#" id="small" class="size size-small"><i class="fas fa-tablet-alt fa-4x"></i></a>
+    <a onclick="changeCanvasSize('petite')" href="#" id="petite" class="size size-small"><i class="fas fa-mobile-alt fa-4x"></i></a>
+    <h2 id="score">Highest Score: <span>0</span> <i class="fas fa-apple-alt"></i></h2>
+    <h2 id="highest-score">Score: <span>0</span> <i class="fas fa-apple-alt"></i></h2>
+  </div>
+  </div>
+  <!-- Modal Game Over -->
   <div id="myModal" class="modal">
-    <!-- Modal content -->
     <div class="modal-content">
       <div class="modal-header">
         <h2>GAME OVER</h2>

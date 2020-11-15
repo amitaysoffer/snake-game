@@ -23,7 +23,7 @@ function addMine() {
   mineLocationX = mineLocationX > canvas.width - snakeSizeX ? canvas.width - snakeSizeX : mineLocationX
   mineLocationY = mineLocationY > canvas.height - snakeSizeY ? canvas.height - snakeSizeY : mineLocationY
 
-  // Verify is in the grid system
+  // Verify mine is in the grid system
   while (mineLocationY / 20 % 1) {
     mineLocationY = mineLocationY + 1
   }

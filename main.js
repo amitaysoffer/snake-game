@@ -54,7 +54,33 @@ function sound(src) {
   }
 }
 
-function gameStart() {
+// let speed = {
+//   low: 125,
+//   medium: 75,
+//   high: 50
+// }
+let speed = 125
+
+document.querySelectorAll('.btn-speed').forEach(btn => {
+  btn.addEventListener('click', function (e) {
+    // debugger
+    console.log('speed event')
+    if (e.target.id === 'turtle') {
+      speed = 300
+    } else if (e.target.id === 'rabit') {
+      speed = 200
+    } else {
+      speed = 100
+    }
+    // console.log(e.target.id)
+    console.log(speed)
+    gameStart(speed)
+    drawEverything();
+  })
+  // debugger
+})
+
+function gameStart(speed) {
   appleReset();
   runGame = setInterval(function () {
     if (isMoveSnakeStart) {
@@ -66,12 +92,9 @@ function gameStart() {
       headCollidesMine()
       isBorders ? addBorders() : headCollidesBorder();
     }
-  }, 70);
+  }, speed);
 }
-gameStart();
-drawEverything();
-
-
+// gameStart();
 
 function moveSnakeHead() {
   switch (direction) {
@@ -307,36 +330,36 @@ function changeCanvasSize(size) {
   drawEverything();
 }
 
-// Control Snake with arrows
+// Control Snake directions with arrows
 document.addEventListener("keydown", function (e) {
   // RIGHT
   if (e.which === 39) {
-    const isHeadAtRight = body[0].x === 780 && isBorders
-    if (direction !== DIRECTION_LEFT && !isHeadAtRight) {
+    const isHeadAtRightBorder = body[0].x === 780 && isBorders
+    if (direction !== DIRECTION_LEFT && !isHeadAtRightBorder) {
       direction = DIRECTION_RIGHT
     }
     isMoveSnakeStart = true
   }
   // LEFT
   if (e.which === 37) {
-    const isHeadAtLeft = body[0].x === 0 && isBorders
-    if (direction !== DIRECTION_RIGHT && !isHeadAtLeft) {
+    const isHeadAtLeftBorder = body[0].x === 0 && isBorders
+    if (direction !== DIRECTION_RIGHT && !isHeadAtLeftBorder) {
       direction = DIRECTION_LEFT
     }
     isMoveSnakeStart = true
   }
   // UP
   if (e.which === 38) {
-    const isHeadAtTop = body[0].y === 0 && isBorders
-    if (direction !== DIRECTION_DOWN && !isHeadAtTop) {
+    const isHeadAtTopBorder = body[0].y === 0 && isBorders
+    if (direction !== DIRECTION_DOWN && !isHeadAtTopBorder) {
       direction = DIRECTION_UP
     }
     isMoveSnakeStart = true
   }
   // DOWN
   if (e.which === 40) {
-    const isHeadAtBottom = body[0].y === 580 && isBorders
-    if (direction !== DIRECTION_UP && !isHeadAtBottom) {
+    const isHeadAtBottomBorder = body[0].y === 580 && isBorders
+    if (direction !== DIRECTION_UP && !isHeadAtBottomBorder) {
       direction = DIRECTION_DOWN
     }
     isMoveSnakeStart = true

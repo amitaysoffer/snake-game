@@ -1,6 +1,6 @@
 canvas {
   display: block;
-  margin: 20 auto;
+  margin: 15 auto;
 }
 
 body {
@@ -42,8 +42,7 @@ h1 {
   height: 100;
 }
 
-.btn-border, 
-.btn-mine {
+.button {
   color: white;
   padding: 15px 25px;
   text-align: center;
@@ -100,10 +99,16 @@ h1 {
   transform: translateY(4px);
 }
 
-.row {
+.score-box {
   display: flex;
-  justify-content: space-between;
-  width: 100%;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.feature-box {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .size:hover {
@@ -117,7 +122,6 @@ h1 {
 h2 {
   color: #333;
   font-size: 29px;
-  margin: auto;
   box-shadow: 2px 2px 6px #888;
   background-color: #fff;
   border: 5px ridge #333;
