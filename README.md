@@ -6,9 +6,9 @@
 
 Click [HERE](https://amitaysoffer.github.io/snake-game/) to play the game.
 
-<img src="https://user-images.githubusercontent.com/31068256/99194582-2974a080-2778-11eb-89be-d88dab1a8e16.png" width="700" >
-<img src="https://user-images.githubusercontent.com/31068256/99194681-d818e100-2778-11eb-8aff-b5cb85a3e203.png" width="700" >
-<img src="https://user-images.githubusercontent.com/31068256/99194598-4ad58c80-2778-11eb-9f65-e22ae9bb1c9e.png" width="700" >
+<img src="https://user-images.githubusercontent.com/31068256/99194582-2974a080-2778-11eb-89be-d88dab1a8e16.png" width="800" >
+<img src="https://user-images.githubusercontent.com/31068256/99194681-d818e100-2778-11eb-8aff-b5cb85a3e203.png" width="400" >
+<img src="https://user-images.githubusercontent.com/31068256/99194598-4ad58c80-2778-11eb-9f65-e22ae9bb1c9e.png" width="400" >
 
 ## Summary
 
@@ -23,5 +23,11 @@ Borders- For complete begginers this feature is key. Press the Borders button an
 At first glance this game seams incredibly simple, but after diving in, I really started to see it's complexity. I learned tons about data relations and gaming conceps in vanillas javascript.
 
 ## Author
-Amitay Soffer - Front End Developer - [Website](https://www.esncz.org/sites/default/files/imce/under-construction.jpg) |  [LinkedIn](https://www.linkedin.com/in/amitay-soffer-137304151/)
+
+### Amitay Soffer- Full Stack Web Developer
+
+<a href="https://www.esncz.org/sites/default/files/imce/under-construction.jpg" target="_blank" rel="noopener">Personal Website</a>
+
+[LinkedIn](https://www.linkedin.com/in/amitay-soffer-137304151/)
+
 
