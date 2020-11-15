@@ -205,3 +205,81 @@ h3 {
   from {top: -300px; opacity: 0}
   to {top: 0; opacity: 1}
 }
+
+/* Modal Instructions */
+/* Modal Header */
+.modal-header-instructions {
+  padding: 5px 5px 0px 5px;
+  color: white;
+  border-bottom: 2px solid #fff;
+}
+
+/* Modal Footer */
+.modalmodal-content-box {
+  padding: 10px 16px;
+  background-color: #ff2b2b;
+  color: white;
+  font-size: 25px;
+}
+
+/* Modal Content */
+.modal-content-instructions {
+  position: relative;
+  background-color: #fefefe;
+  margin: 120px auto;
+  padding: 0;
+  border: 1px solid #888;
+  width: 80%;
+  height: auto;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  animation-name: animatetop;
+  animation-duration: 0.4s;
+  text-align: center;
+  border-radius: 20px;
+  background: #5ba784;
+}
+
+.modal-instructions-header {
+  width: auto;
+    color: #333;
+    border: none;
+    letter-spacing: normal;
+    text-align: center;
+    border-radius: 5px;
+    margin: 0;
+}
+
+p {
+  font-size: 2rem;
+  text-align: start;
+  margin: 0;
+  padding: 10px;
+}
+
+ul {
+  text-align: start;
+  margin: 10px;
+}
+
+ul li {
+  font-size: 25px;
+}
+
+.rules-header {
+  margin: 0;
+}
+
+/* Add Animation */
+@keyframes animatetop {
+  from {top: -300px; opacity: 0}
+  to {top: 0; opacity: 1}
+}
+
+.speed-btn {
+  box-shadow: none;
+}
+
+.speed-btn:hover {
+  opacity: 0.8;
+  color: #000;
+}

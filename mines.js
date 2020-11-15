@@ -1,5 +1,5 @@
 let mines = [];
-let isMines = false;
+let isMines = true;
 
 function toggleMinesActivation() {
   if (!isMines) {

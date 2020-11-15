@@ -53,8 +53,30 @@ function sound(src) {
     this.sound.pause();
   }
 }
+const speeds = {
+  slow: 110,
+  medium: 70,
+  insane: 45
+}
+let levelSpeed;
 
-function gameStart() {
+window.addEventListener('DOMContentLoaded', () => {
+  renderModalInstructions()
+});
+
+function renderModalInstructions() {
+  document.querySelectorAll('.speed-btn').forEach(btn => {
+    btn.addEventListener('click', function (e) {
+      levelSpeed = speeds[e.target.id]
+      document.getElementById('modal-instructions').remove()
+      gameStart(levelSpeed);
+      drawEverything();
+    })
+  })
+  document.getElementById("modal-instructions").style.display = "block";
+}
+
+function gameStart(speed) {
   appleReset();
   runGame = setInterval(function () {
     if (isMoveSnakeStart) {
@@ -66,10 +88,8 @@ function gameStart() {
       headCollidesMine()
       isBorders ? addBorders() : headCollidesBorder();
     }
-  }, 70);
+  }, speed);
 }
-gameStart();
-drawEverything();
 
 function moveSnakeHead() {
   switch (direction) {
@@ -215,9 +235,9 @@ function gameOver(location) {
   document.body.onkeyup = function (e) {
     if (e.which == 32) {
       if (!isGameOn) {
-        modal.style.display = "none";
+        modalGameOver.style.display = "none";
         resetAllSettings()
-        gameStart();
+        gameStart(levelSpeed);
         drawEverything();
 
         isGameOn = true
@@ -226,10 +246,10 @@ function gameOver(location) {
   }
 }
 
-const modal = document.getElementById("myModal");
+const modalGameOver = document.getElementById("myModal");
 function displayGameOverScreen(location) {
   // Block rest of screen
-  modal.style.display = "block";
+  modalGameOver.style.display = "block";
   // Append new score details
   const div = document.createElement('div');
   // Remove old score if exists on display
