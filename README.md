@@ -23,5 +23,5 @@ Borders- For complete begginers this feature is key. Press the Borders button an
 At first glance this game seams incredibly simple, but after diving in, I really started to see it's complexity. I learned tons about data relations and gaming conceps in vanillas javascript.
 
 ## Author
+Amitay Soffer - Front End Developer - [Website](https://www.esncz.org/sites/default/files/imce/under-construction.jpg) |  [LinkedIn](https://www.linkedin.com/in/amitay-soffer-137304151/)
 
-Amitay Soffer - Software Developer - [Website](https://www.esncz.org/sites/default/files/imce/under-construction.jpg) | [LinkedIn](https://www.linkedin.com/in/amitay-soffer-137304151/)
