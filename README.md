@@ -15,12 +15,12 @@ Click [HERE](https://amitaysoffer.github.io/snake-game/) to play the game.
 This version of the classic snake game helps you adjust your level to the game and not vice versa. You can add borders, mines and even adjust the size of the game to your monitor.
 
 How to play-
-Use the four basic keys on your keyboard to move the snake (up, down, right, left). To Trigger the Borders and/or Mines features, you can either click the 'B' (Borders) or 'M' (Mines) letters on your keyboard respectively, or click the buttons on the screen.
+Use the four basic keys on your keyboard to move the snake (up, down, right, left). To trigger the Borders and/or Mines features, you can either click the 'B' (Borders) or 'M' (Mines) letters on your keyboard, respectively, or click the buttons on the screen.
 
-A mine- once activated, a new mine will appear randomally on the screen after each time a user collects an apple. Touch a mine and suffer the consequences.
-Borders- For complete begginers this feature is key. Press the Borders button and you can calmly let the snake touch the borders without having to restart the game.
+A mine- once activated, a new mine will appear randomly on the screen after each time a user collects an apple. Touch a mine and suffer the consequences.
+Borders- For complete beginners this feature is key. Press the Borders button and you can calmly let the snake touch the borders without having to restart the game.
 
-At first glance this game seams incredibly simple, but after diving in, I really started to see it's complexity. I learned tons about data relations and gaming conceps in vanillas javascript.
+At first glance this game seems incredibly simple, but after diving in, I really started to see its complexity. I learned tons about data relations and gaming concepts in vanilla JavaScript.
 
 ## Author
 
